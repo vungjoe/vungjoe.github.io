@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.vungjoe.xyz","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="参考文档：数据分析：常见的Excel函数全部涵盖在这里了 这是学习《七周成为数据分析师》系列的第 1 篇笔记。  一、清洗处理类 1.1 TRIM——去空格 功能：清除掉字符串两边的空格 使用： 1&#x3D;TRIM(单元格) 1.2 CONCATENATE——合并单元格 功能：合并几个单元格的内容。使用 单元格1&amp;单元格2&amp;... 能实现相同的效果，但函数在单元格较多时效率更高、更优雅。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Excel常见函数的使用">
+<meta property="og:url" content="https://blog.vungjoe.xyz/Excel%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8.html">
+<meta property="og:site_name" content="VUNGJOE&#39;S BLOG">
+<meta property="og:description" content="参考文档：数据分析：常见的Excel函数全部涵盖在这里了 这是学习《七周成为数据分析师》系列的第 1 篇笔记。  一、清洗处理类 1.1 TRIM——去空格 功能：清除掉字符串两边的空格 使用： 1&#x3D;TRIM(单元格) 1.2 CONCATENATE——合并单元格 功能：合并几个单元格的内容。使用 单元格1&amp;单元格2&amp;... 能实现相同的效果，但函数在单元格较多时效率更高、更优雅。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2019/03/04/5c7c9e358515a.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/03/05/5c7d61fb59409.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/05/5c7d675eb9d6d.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/07/5c813f06337ae.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/08/5c8148884cba8.png">
+<meta property="article:published_time" content="2019-03-04T03:05:52.000Z">
+<meta property="article:modified_time" content="2019-12-31T16:54:20.000Z">
+<meta property="article:author" content="vungjoe">
+<meta property="article:tag" content="Excel">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2019/03/04/5c7c9e358515a.jpg">
+
+
+<link rel="canonical" href="https://blog.vungjoe.xyz/Excel%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":"","permalink":"https://blog.vungjoe.xyz/Excel%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8.html","path":"Excel常见函数的使用.html","title":"Excel常见函数的使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Excel常见函数的使用 | VUNGJOE'S BLOG</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">VUNGJOE'S BLOG</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E6%B8%85%E6%B4%97%E5%A4%84%E7%90%86%E7%B1%BB"><span class="nav-text">一、清洗处理类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#trim%E5%8E%BB%E7%A9%BA%E6%A0%BC"><span class="nav-text">1.1 TRIM——去空格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#concatenate%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC"><span class="nav-text">1.2 CONCATENATE——合并单元格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#replace%E6%9B%BF%E6%8D%A2%E8%BF%9E%E7%BB%AD%E4%BD%8D%E7%BD%AE"><span class="nav-text">1.3 REPLACE——替换连续位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#substitute%E6%9B%BF%E6%8D%A2"><span class="nav-text">1.4 SUBSTITUTE——替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#leftrightmid%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-text">1.5 LEFT&#x2F;RIGHT&#x2F;MID——截取字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lenlenb%E8%AE%A1%E7%AE%97%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6"><span class="nav-text">1.6 LEN&#x2F;LENB——计算字符串长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find%E6%89%BE%E4%BD%8D%E7%BD%AE"><span class="nav-text">1.7 FIND——找位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#search%E6%89%BE%E4%BD%8D%E7%BD%AE"><span class="nav-text">1.8 SEARCH——找位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#text%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%95%B0%E5%AD%97"><span class="nav-text">1.9 TEXT——格式化数字</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%85%B3%E8%81%94%E5%8C%B9%E9%85%8D%E7%B1%BB"><span class="nav-text">二、关联匹配类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lookup%E5%9C%A8%E5%90%91%E9%87%8F%E5%92%8C%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9F%A5%E6%89%BE%E5%80%BC"><span class="nav-text">2.1 LOOKUP——在向量和数组中查找值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vlookup%E6%9F%A5%E6%89%BE%E5%80%BC"><span class="nav-text">2.2 VLOOKUP——查找值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#index%E7%B4%A2%E5%BC%95%E6%89%BE%E5%80%BC"><span class="nav-text">2.3 INDEX——索引找值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#match"><span class="nav-text">2.4 MATCH——</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rowcolumn%E8%BF%94%E5%9B%9E%E8%A1%8C%E5%88%97"><span class="nav-text">2.5 ROW&#x2F;COLUMN——返回行&#x2F;列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#offset%E4%BB%8E%E7%BB%99%E5%AE%9A%E5%BC%95%E7%94%A8%E4%B8%AD%E8%BF%94%E5%9B%9E%E5%BC%95%E7%94%A8%E5%81%8F%E7%A7%BB%E9%87%8F"><span class="nav-text">2.6 OFFSET——从给定引用中返回引用偏移量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%B1%BB"><span class="nav-text">三、逻辑运算类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#if%E5%A6%82%E6%9E%9C%E6%80%8E%E6%A0%B7%E5%B0%B1%E6%80%8E%E6%A0%B7"><span class="nav-text">3.1 IF——如果怎样就怎样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#and%E5%85%A8%E9%83%A8%E4%B8%BA%E7%9C%9F%E6%89%8D%E7%9C%9F"><span class="nav-text">3.2 AND——全部为真才真</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#or%E5%85%A8%E9%83%A8%E4%B8%BA%E5%81%87%E6%89%8D%E5%81%87"><span class="nav-text">3.3 OR——全部为假才假</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#is%E7%B3%BB%E5%88%97%E5%88%A4%E6%96%AD%E6%A3%80%E9%AA%8C"><span class="nav-text">3.4 IS系列——判断检验</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E8%AE%A1%E7%AE%97%E7%BB%9F%E8%AE%A1%E7%B1%BB"><span class="nav-text">四、计算统计类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sumsumifsumifs%E6%B1%82%E5%92%8C"><span class="nav-text">4.1 SUM&#x2F;SUMIF&#x2F;SUMIFS——求和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sumproduct%E6%B1%82%E4%B9%98%E7%A7%AF%E5%92%8C"><span class="nav-text">4.2 SUMPRODUCT——求乘积和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#countcountifcountifs"><span class="nav-text">4.3 COUNT&#x2F;COUNTIF&#x2F;COUNTIFS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#maxmin%E6%9C%80%E5%A4%A7%E6%9C%80%E5%B0%8F%E5%80%BC"><span class="nav-text">4.4 MAX&#x2F;MIN——最大&#x2F;最小值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rankrank.avgrank.eq%E6%89%BE%E5%87%BA%E6%8C%87%E5%AE%9A%E5%80%BC%E7%9A%84%E6%8E%92%E4%BD%8D"><span class="nav-text">4.5 RANK&#x2F;RANK.AVG&#x2F;RANK.EQ——找出指定值的排位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#randrandbetween%E9%9A%8F%E6%9C%BA%E6%8A%BD%E6%A0%B7"><span class="nav-text">4.6 RAND&#x2F;RANDBETWEEN——随机抽样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#averagea%E5%B9%B3%E5%9D%87%E6%95%B0"><span class="nav-text">4.7 AVERAGEA——平均数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quartile%E8%AE%A1%E7%AE%97%E5%9B%9B%E5%88%86%E4%BD%8D%E6%95%B0"><span class="nav-text">4.8 QUARTILE——计算四分位数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stdev%E6%B1%82%E6%A0%87%E5%87%86%E5%B7%AE"><span class="nav-text">4.9 STDEV——求标准差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#subtotal%E4%B8%8A%E9%9D%A2%E5%85%A8%E9%83%A8%E5%87%BD%E6%95%B0%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-text">4.10 SUBTOTAL——上面全部函数的功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#intround%E5%8F%96%E6%95%B4"><span class="nav-text">4.11 INT&#x2F;ROUND——取整</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E7%B1%BB"><span class="nav-text">五、时间序列类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#date%E5%90%88%E5%B9%B6%E5%B9%B4%E6%9C%88%E6%97%A5%E4%B8%BA%E4%B8%80%E4%B8%AA%E6%97%A5%E6%9C%9F"><span class="nav-text">5.1 DATE——合并年月日为一个日期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yearmonthday%E5%B9%B4%E6%9C%88%E6%97%A5"><span class="nav-text">5.2 YEAR&#x2F;MONTH&#x2F;DAY——年月日</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#weekday%E4%B8%80%E5%91%A8%E4%B8%AD%E7%9A%84%E7%AC%AC%E5%87%A0%E5%A4%A9"><span class="nav-text">5.3 WEEKDAY——一周中的第几天</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#weeknum%E4%B8%80%E5%B9%B4%E4%B8%AD%E7%9A%84%E7%AC%AC%E5%87%A0%E5%91%A8"><span class="nav-text">5.4 WEEKNUM——一年中的第几周</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nowtoday%E5%BD%93%E5%89%8D%E6%97%B6%E9%97%B4"><span class="nav-text">5.5 NOW&#x2F;TODAY——当前时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#datedif%E6%97%B6%E9%97%B4%E5%B7%AE"><span class="nav-text">5.6 DATEDIF——时间差</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">vungjoe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/vungjoe" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;vungjoe" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:vungjoe.xyz@gmail.com" title="E-Mail → mailto:vungjoe.xyz@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.vungjoe.xyz/Excel%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="vungjoe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="VUNGJOE'S BLOG">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Excel常见函数的使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-03-04 11:05:52" itemprop="dateCreated datePublished" datetime="2019-03-04T11:05:52+08:00">2019-03-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2020-01-01 00:54:20" itemprop="dateModified" datetime="2020-01-01T00:54:20+08:00">2020-01-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">数据分析</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/Excel/" itemprop="url" rel="index"><span itemprop="name">Excel</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>参考文档：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MjM5NjEyMDI2MQ==&amp;mid=2455946747&amp;idx=1&amp;sn=667693f99cc34ca357719cc459fba183&amp;chksm=b1787651860fff47f24645579fe956e952360ddc597b1fd5be43f90df2212103434dc42731a5&amp;scene=21#wechat_redirect">数据分析：常见的Excel函数全部涵盖在这里了</a></p>
+<p>这是学习《七周成为数据分析师》系列的第 1 篇笔记。</p>
+<hr />
+<h2 id="一清洗处理类">一、清洗处理类</h2>
+<h3 id="trim去空格">1.1 TRIM——去空格</h3>
+<p><strong>功能</strong>：清除掉字符串两边的空格</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=TRIM(单元格)</span><br></pre></td></tr></table></figure>
+<h3 id="concatenate合并单元格">1.2 CONCATENATE——合并单元格</h3>
+<p><strong>功能</strong>：合并几个单元格的内容。使用 <code>单元格1&amp;单元格2&amp;...</code> 能实现相同的效果，但函数在单元格较多时效率更高、更优雅。</p>
+<span id="more"></span>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=CONCATENATE(单元格<span class="number">1</span>,单元格<span class="number">2</span>......)</span><br></pre></td></tr></table></figure>
+<h3 id="replace替换连续位置">1.3 REPLACE——替换连续位置</h3>
+<p><strong>功能</strong>：替换单元格中指定位置的内容，将从某个位置开始的固定长度的字符串替换成想要的内容。</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=REPLACE(单元格,起始位置,替换几个字符,替换成什么)</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：</p>
+<ul>
+<li>第一个字符对应的位置是1，而不是0</li>
+<li>如果不给定替换长度，将在起始位置后面<strong>插入</strong>替换内容</li>
+</ul>
+<h3 id="substitute替换">1.4 SUBSTITUTE——替换</h3>
+<p><strong>功能</strong>：（单元格中有重复的字符串）将单元格中字符串，将单元格中的指定的第几个 A 替换成 B，不指定时为全局替换。</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=SUBSTITUTE(单元格,A,B,[第几个A])</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：</p>
+<ul>
+<li>最后一个参数是第几个A——也就是第几个要替换的字符。不指定时为替换所有的 A 为 B。</li>
+</ul>
+<p><strong>示例</strong>：</p>
+<figure>
+<img src="https://i.loli.net/2019/03/04/5c7c9e358515a.jpg" alt="Snipaste_2019-03-04_11-36-06 .jpg" /><figcaption>Snipaste_2019-03-04_11-36-06 .jpg</figcaption>
+</figure>
+<h3 id="leftrightmid截取字符串">1.5 LEFT/RIGHT/MID——截取字符串</h3>
+<p><strong>功能</strong>：截取字符串中的指定字符</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">LEFT/RIGHT(单元格,截取长度)</span><br><span class="line"># 在字符串的左侧/右侧取出指定长度的字符串，</span><br><span class="line"></span><br><span class="line"><span class="keyword">MID</span>(单元格,开始位置,截取长度)</span><br><span class="line"># 截取字符串，包含起始位置</span><br></pre></td></tr></table></figure>
+<h3 id="lenlenb计算字符串长度">1.6 LEN/LENB——计算字符串长度</h3>
+<p><strong>功能</strong>：返回单元格的长度</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LEN/LENB(单元格)</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：</p>
+<ul>
+<li>LEN 函数中，中文算作一个</li>
+<li>LENB 函数中，中文算作两个</li>
+</ul>
+<h3 id="find找位置">1.7 FIND——找位置</h3>
+<p><strong>功能</strong>：返回指定字符在字符串中第一次出现的位置</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FIND(指定字符,单元格,从单元格的第几个字符开始搜索)</span><br></pre></td></tr></table></figure>
+<p><strong>示例</strong>：</p>
+<figure>
+<img src="https://i.loli.net/2019/03/05/5c7d61fb59409.png" alt="Screen Shot 2019-03-05 at 01.32.07.png" /><figcaption>Screen Shot 2019-03-05 at 01.32.07.png</figcaption>
+</figure>
+<h3 id="search找位置">1.8 SEARCH——找位置</h3>
+<p><strong>功能</strong>：与 FIND 类似，但<strong>区分大小写</strong></p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=SEARCH(指定字符,单元格,从第几个字符开始找)</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：</p>
+<ul>
+<li>SEARCH 区分大小写</li>
+<li>找不到时会报错，<code>#VALUE!</code>，这一点和 FIND 相同。</li>
+<li>支持使用通配符 <code>*</code></li>
+</ul>
+<h3 id="text格式化数字">1.9 TEXT——格式化数字</h3>
+<p><strong>功能</strong>：将数字转换成为本，并以想要的格式进行展示，常与时间函数结合使用</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=<span class="keyword">TEXT</span>(想要格式化的数字,“想展示的格式”)</span><br></pre></td></tr></table></figure>
+<p><strong>示例</strong>（摘自微软官网）：</p>
+<figure>
+<img src="https://i.loli.net/2019/03/05/5c7d675eb9d6d.png" alt="text函数示例.png" /><figcaption>text函数示例.png</figcaption>
+</figure>
+<h2 id="二关联匹配类">二、关联匹配类</h2>
+<h3 id="lookup在向量和数组中查找值">2.1 LOOKUP——在向量和数组中查找值</h3>
+<p><strong>功能</strong>：<a target="_blank" rel="noopener" href="https://support.office.com/zh-cn/article/lookup-%E5%87%BD%E6%95%B0-446d94af-663b-451d-8251-369d5e3864cb">LOOKUP 函数</a>可以用来查询一行或一列并查找另一行或列中的相同位置的值。</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=LOOKUP(查找的值,查找的值所在的行/列,结果所在的行/列)</span><br><span class="line">=LOOKUP(lookup_value, lookup_vector, [result_vector])</span><br></pre></td></tr></table></figure>
+<p><strong>注释</strong>：</p>
+<ul>
+<li>功能与 VLOOKUP 相同，建议使用 VLOOKUP。</li>
+<li>向量形式中，lookup_vecotr 必须按升序排列
+<ul>
+<li>如果 LOOKUP 函数找不到 lookup_value，则该函数会与 lookup_vector 中小于或等于 lookup_value 的最大值进行匹配。</li>
+<li>如果 lookup_value 小于 lookup_vector 中的最小值，则 LOOKUP 会返回 #N/A 错误值。</li>
+</ul></li>
+</ul>
+<h3 id="vlookup查找值">2.2 VLOOKUP——查找值</h3>
+<p><strong>功能</strong>：在数组第一列中查找，然后在行之间移动以返回单元格的值</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=VLOOKUP(查找的值,在哪里找,找哪个位置的值,是否精准匹配)</span><br></pre></td></tr></table></figure>
+<h3 id="index索引找值">2.3 INDEX——索引找值</h3>
+<p><strong>功能</strong>：使用索引从引用或数组中选择值</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=INDEX(查找代区域,区域内第几行,区域内第几列)  # 数组形式</span><br><span class="line">=INDEX() # 引用形式</span><br></pre></td></tr></table></figure>
+<h3 id="match">2.4 MATCH——</h3>
+<p><strong>功能</strong>：在查找的区域内搜索查找值，找到后返回匹配值的<strong>相对位置</strong>，而不是值本身。</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=MATCH(查找值,查找的单元格区域[,查找方式])</span><br></pre></td></tr></table></figure>
+<p><strong>注释</strong>：</p>
+<ul>
+<li>查找方式共有3种：-1，0，1.
+<ul>
+<li>-1，表示查找小于或等于查找值的最大值</li>
+<li>0，表示查找完全等于查找值的第一个值
+<ul>
+<li>如果使用本参数，且查找值是文本字符串，则可以在查找值中使用通配符 <code>*</code>（匹配任意一串字符）和 <code>?</code>（匹配任意单个字符）</li>
+<li>如果查找的值是 <code>*</code> 或 <code>?</code> 本身，则在其前面加波浪符 <code>~</code></li>
+</ul></li>
+<li>1，表示查找大于或等于查找值的最小值</li>
+</ul></li>
+<li>查找的单元格区域，也可以替换为数组，只是不常用</li>
+</ul>
+<h3 id="rowcolumn返回行列">2.5 ROW/COLUMN——返回行/列</h3>
+<p><strong>功能</strong>：返回单元格所在的行/列号</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=ROW/COLUMN(单元格)</span><br></pre></td></tr></table></figure>
+<p><strong>注释</strong>：</p>
+<ul>
+<li>如果不加参数，则会返回公式所在的单元格的行号/列号</li>
+</ul>
+<h3 id="offset从给定引用中返回引用偏移量">2.6 OFFSET——从给定引用中返回引用偏移量</h3>
+<p><strong>功能</strong>：返回对单元格或单元格区域中指定行数和列数的区域的引用。返回的引用可以是单个单元格或单元格区域。 可以指定要返回的行数和列数。</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=OFFSET(reference, rows, cols, [height], [width])</span><br></pre></td></tr></table></figure>
+<p><strong>注释</strong>：</p>
+<ul>
+<li>以reference（某个单元格）为原点建立一个坐标系，返回距离原点的值或者区域</li>
+<li>rows/cols表示指定到原点的距离，正数向下或向右，负数向上或向左</li>
+</ul>
+<h2 id="三逻辑运算类">三、逻辑运算类</h2>
+<h3 id="if如果怎样就怎样">3.1 IF——如果怎样就怎样</h3>
+<p><strong>功能</strong>：执行逻辑判断语句后，结果为 TRUE 执行第2个参数，结果为 FALSE 执行第三个参数（第三个参数可省略）</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=<span class="keyword">IF</span>(逻辑判断,结果为<span class="literal">TRUE</span>执行本句[,结果为<span class="literal">FALSE</span>执行本句])</span><br></pre></td></tr></table></figure>
+<h3 id="and全部为真才真">3.2 AND——全部为真才真</h3>
+<p><strong>功能</strong>：多条件判断，所有结果为真是判断才为真</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">AND</span>(判断<span class="number">1</span>, 判断<span class="number">2</span>, ...)</span><br></pre></td></tr></table></figure>
+<h3 id="or全部为假才假">3.3 OR——全部为假才假</h3>
+<p><strong>功能</strong>：多条件判断，所有结果为假是判断才为假</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">OR</span>(判断<span class="number">1</span>[, 判断<span class="number">2</span>, ...])</span><br></pre></td></tr></table></figure>
+<h3 id="is系列判断检验">3.4 IS系列——判断检验</h3>
+<p><strong>功能</strong>：判断检验，返回值为 TRUE 或 FALSE。常用的有 ISERROR，ISERR，ISERROR，ISNA，ISNUMBER，ISTEXT 等。更详细的内容参见<a target="_blank" rel="noopener" href="https://support.office.com/zh-cn/article/is-%E5%87%BD%E6%95%B0-0f2d7971-6019-40a0-a171-f2d869135665">IS 函数</a></p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">=ISBLANK() # 值为空白单元格。</span><br><span class="line"></span><br><span class="line">=ISERR() # 值为任意错误值（除去 #N/A）。</span><br><span class="line"></span><br><span class="line">=ISERROR() # 值为任意错误值（#N/A、#VALUE!、#REF!、#DIV/<span class="number">0</span>!、#NUM!、#NAME? 或 #NULL!）。</span><br><span class="line"></span><br><span class="line">=ISNA() # 值为错误值 `#N/A`（值不存在）。</span><br><span class="line"></span><br><span class="line">=ISNUMBER() # 值为数字。</span><br><span class="line"></span><br><span class="line">=ISREF() # 值为引用。</span><br></pre></td></tr></table></figure>
+<h2 id="四计算统计类">四、计算统计类</h2>
+<p>常用的基础计算、分析、统计函数，以描述性统计为准。</p>
+<h3 id="sumsumifsumifs求和">4.1 SUM/SUMIF/SUMIFS——求和</h3>
+<p><strong>功能</strong>：统计满足条件的单元格的总和，主要掌握前面两个。</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">=SUM(单元格<span class="number">1</span>[,单元格<span class="number">2</span>,...])</span><br><span class="line">=SUMIF(range, criteria, [sum_range])</span><br><span class="line">=SUMIFS(sum_range, criteria_range1, criteria1, [criteria_range2, criteria2], ...)</span><br></pre></td></tr></table></figure>
+<p><strong>注释</strong>：</p>
+<ul>
+<li>criteria（条件），</li>
+<li>SUM 函数使用 <code>,</code> 连接单元格时，最多支持255个单元格</li>
+</ul>
+<h3 id="sumproduct求乘积和">4.2 SUMPRODUCT——求乘积和</h3>
+<p><strong>功能</strong>：求给定数组间对应元素的乘积和</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=SUMPRODUCT(array1, [array2], [array3], ...)</span><br></pre></td></tr></table></figure>
+<p><strong>注释</strong>：</p>
+<ul>
+<li>多个数组必须具有相同的维数，即有相同个数的元素</li>
+<li>函数 SUMPRODUCT 将非数值型的数组元素作为 0 处理。</li>
+</ul>
+<h3 id="countcountifcountifs">4.3 COUNT/COUNTIF/COUNTIFS</h3>
+<p><strong>功能</strong>：统计满足条件的参数个数，并不是单元格个数（只是大多数情况下用到的都是单元格）</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">=COUNT(value1, [value2], ...)</span><br><span class="line">=COUNTIF(range, criteria)</span><br><span class="line">=COUNTIFS(criteria_range1, criteria1, [criteria_range2, criteria2], ...)</span><br></pre></td></tr></table></figure>
+<p><strong>注释</strong>：</p>
+<ul>
+<li>只计算数字类型的数据个数</li>
+<li>统计跨多个区域的单元格，使用 COUNTIFS</li>
+</ul>
+<h3 id="maxmin最大最小值">4.4 MAX/MIN——最大/最小值</h3>
+<p><strong>功能</strong>：计算数组或单元格中的最大/最小值</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=MAX/MIN(number1, [number2], ...)</span><br></pre></td></tr></table></figure>
+<h3 id="rankrank.avgrank.eq找出指定值的排位">4.5 RANK/RANK.AVG/RANK.EQ——找出指定值的排位</h3>
+<p><strong>功能</strong>：返回一列数字的数字排位</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=RANK/RANK.AVG/RANK.EQ(number, ref, [<span class="keyword">order</span>])</span><br></pre></td></tr></table></figure>
+<p><strong>注释</strong>：</p>
+<ul>
+<li>三个函数的语法完全相同，原来只有一个 RANK 函数，现在拆分成了两个 RANK.AVG 和 RANK.EQ。
+<ul>
+<li>RANK.AVG，如果出先多个值具有相同的排位，返回的是平均排位</li>
+<li>RANK.EQ，如果出先多个值具有相同的排位，返回的是最高排位</li>
+</ul></li>
+<li>REF 中的数值会被排序，非数字会被忽略</li>
+<li>ORDER 两种，升序或降序
+<ul>
+<li>0 或 忽略，表示 REF 按降序排列</li>
+<li>不为零，表示 REF 按升序排列</li>
+</ul></li>
+</ul>
+<p><strong>示例</strong>：</p>
+<p><code>RANK(A1,A2:A10,0)</code>表示 A1 在 A2 到 A10 按升序排列时的排位。</p>
+<h3 id="randrandbetween随机抽样">4.6 RAND/RANDBETWEEN——随机抽样</h3>
+<p><strong>功能</strong>：RAND 返回 0~1 之间的随机实数，RANDBETWEEN 返回指定区间内的整数</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">=RAND()</span><br><span class="line"></span><br><span class="line">=RANDBETWEEN(bottom,top)</span><br></pre></td></tr></table></figure>
+<h3 id="averagea平均数">4.7 AVERAGEA——平均数</h3>
+<p><strong>功能</strong>：求解平均数</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=AVERAGEA(num1, [num2, ...])</span><br></pre></td></tr></table></figure>
+<h3 id="quartile计算四分位数">4.8 QUARTILE——计算四分位数</h3>
+<p><strong>功能</strong>：返回一组数据的四分位点</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=QUARTILE(array,quart)</span><br></pre></td></tr></table></figure>
+<p><strong>注释</strong>：</p>
+<ul>
+<li>quart 有5个值，分别是0、1、2、3、4。
+<ul>
+<li>0 表示最小值，和 MIN 函数的结果相同</li>
+<li>1 表示25%的值</li>
+<li>2 表示中值，和 MEDIAN 函数结果相同</li>
+<li>3 表示75%的值</li>
+<li>4 表示最大值，和 MAX 函数结果相同</li>
+</ul></li>
+<li>quart 不为整数时，将被截尾取整</li>
+<li>array 为空、quart&lt;0、quart&gt;4时，函数返回错误值 <code>#NUM!</code></li>
+</ul>
+<h3 id="stdev求标准差">4.9 STDEV——求标准差</h3>
+<p><strong>功能</strong>：求样本的标准差</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=STDEV(num1[, num2, ...])</span><br></pre></td></tr></table></figure>
+<h3 id="subtotal上面全部函数的功能">4.10 SUBTOTAL——上面全部函数的功能</h3>
+<p><strong>功能</strong>：</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SUBTOTAL(function_num,ref1,[ref2],...)</span><br></pre></td></tr></table></figure>
+<p><strong>注释</strong>：</p>
+<ul>
+<li>function_num，有1-11和101-111，用于指定分类汇总使用的函数。数字和函数的对应关系如下图所示。 <img src="https://i.loli.net/2019/03/07/5c813f06337ae.png" alt="SUBTOTAL.png" /></li>
+<li>不包含已筛选掉的值</li>
+</ul>
+<h3 id="intround取整">4.11 INT/ROUND——取整</h3>
+<p><strong>功能</strong>：取整函数。INT 向下取整，ROUND 按小数位取整(四舍五入)</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=INT/ROUND()</span><br></pre></td></tr></table></figure>
+<p><strong>注释</strong>：</p>
+<ul>
+<li>INT 会往小了取整</li>
+<li>ROUND 是四舍五入</li>
+<li>ROUNDUP 向绝对值增大的方向取整</li>
+<li>ROUNDDOWN 向绝对值减小的方向取整</li>
+</ul>
+<h2 id="五时间序列类">五、时间序列类</h2>
+<h3 id="date合并年月日为一个日期">5.1 DATE——合并年月日为一个日期</h3>
+<p><strong>功能</strong>：用三个单独的值，将它们合并为一个日期。返回的值是一个数字，表示该日期距1900年1月1日的天数。如果要显示为日期，需设置单元格格式为日期。</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=<span class="type">DATE</span>(year, month, day)</span><br></pre></td></tr></table></figure>
+<h3 id="yearmonthday年月日">5.2 YEAR/MONTH/DAY——年月日</h3>
+<p><strong>功能</strong>：返回日期中的年月日</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=YEAR/MONTH/DAY(serial_number)</span><br></pre></td></tr></table></figure>
+<p><strong>注释</strong>：</p>
+<ul>
+<li>serial_number 可以是一个数字，也可以是由 date 函数给出的日期。</li>
+</ul>
+<h3 id="weekday一周中的第几天">5.3 WEEKDAY——一周中的第几天</h3>
+<p><strong>功能</strong>：返回指定日期为一周中的第几天</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=WEEKDAY(指定时间,参数)</span><br></pre></td></tr></table></figure>
+<p><strong>注释</strong>：</p>
+<ul>
+<li>由于中西方差异，参数有两个，
+<ul>
+<li>1 表示周日算作第一天</li>
+<li>2 表示周一算作第一天</li>
+</ul></li>
+</ul>
+<h3 id="weeknum一年中的第几周">5.4 WEEKNUM——一年中的第几周</h3>
+<p><strong>功能</strong>：返回指定日期为一年中的第几周</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=WEEKNUM(指定时间,参数)</span><br></pre></td></tr></table></figure>
+<p><strong>注释</strong>：</p>
+<ul>
+<li>这里的参数和 WEEKDAY 中的参数含义相同。</li>
+</ul>
+<h3 id="nowtoday当前时间">5.5 NOW/TODAY——当前时间</h3>
+<p><strong>功能</strong>：返回当前的时间，NOW 带日期和时间，TODAY 只有日期</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=NOW/TODAY()</span><br></pre></td></tr></table></figure>
+<h3 id="datedif时间差">5.6 DATEDIF——时间差</h3>
+<p><strong>功能</strong>：计算两个日期的时间差（年、月、日）</p>
+<p><strong>使用</strong>：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=DATEDIF(start_date,end_date,unit)</span><br></pre></td></tr></table></figure>
+<p><strong>注释</strong>：</p>
+<ul>
+<li>unit 参数的可选项如下： <img src="https://i.loli.net/2019/03/08/5c8148884cba8.png" alt="Screen Shot 2019-03-08 at 00.34.25.png" /></li>
+<li>unit参数要带引号，不能落下了</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Excel/" rel="tag"># Excel</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Python%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA%E5%87%BD%E6%95%B0format.html" rel="prev" title="Python格式化输出函数format">
+                  <i class="fa fa-chevron-left"></i> Python格式化输出函数format
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Excel%E6%8A%80%E5%B7%A7%E5%A4%A7%E6%8F%AD%E7%A7%98.html" rel="next" title="Excel技巧大揭密">
+                  Excel技巧大揭密 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">vungjoe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+</body>
+</html>

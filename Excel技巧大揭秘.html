@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.vungjoe.xyz","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="参考文档：数据分析：Excel技巧大揭秘 这是学习《七周成为数据分析师》系列的第 2 篇笔记。  主要学习带 “★” 的内容。 一、快捷键 以下是 Windows 系统中 Excel 的快捷键。如果是 Mac 系统，一般把 Ctrl 换成 Command 键即可。    组合键 功能     Ctrl+方向键 快速移动光标到数据边缘   Ctrl+Shift+方向键 快速框选单元格，选择到数据边缘">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Excel技巧大揭密">
+<meta property="og:url" content="https://blog.vungjoe.xyz/Excel%E6%8A%80%E5%B7%A7%E5%A4%A7%E6%8F%AD%E7%A7%98.html">
+<meta property="og:site_name" content="VUNGJOE&#39;S BLOG">
+<meta property="og:description" content="参考文档：数据分析：Excel技巧大揭秘 这是学习《七周成为数据分析师》系列的第 2 篇笔记。  主要学习带 “★” 的内容。 一、快捷键 以下是 Windows 系统中 Excel 的快捷键。如果是 Mac 系统，一般把 Ctrl 换成 Command 键即可。    组合键 功能     Ctrl+方向键 快速移动光标到数据边缘   Ctrl+Shift+方向键 快速框选单元格，选择到数据边缘">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2019/03/08/5c828dc5167bc.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/08/5c828e50b3715.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/09/5c82a577d20ba.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/09/5c82a577c678f.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/09/5c82a577c4964.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/09/5c82acd05774e.png">
+<meta property="article:published_time" content="2019-03-07T16:56:46.000Z">
+<meta property="article:modified_time" content="2019-03-09T07:48:46.000Z">
+<meta property="article:author" content="vungjoe">
+<meta property="article:tag" content="Excel">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2019/03/08/5c828dc5167bc.png">
+
+
+<link rel="canonical" href="https://blog.vungjoe.xyz/Excel%E6%8A%80%E5%B7%A7%E5%A4%A7%E6%8F%AD%E7%A7%98.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":"","permalink":"https://blog.vungjoe.xyz/Excel%E6%8A%80%E5%B7%A7%E5%A4%A7%E6%8F%AD%E7%A7%98.html","path":"Excel技巧大揭秘.html","title":"Excel技巧大揭密"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Excel技巧大揭密 | VUNGJOE'S BLOG</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">VUNGJOE'S BLOG</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-text">一、快捷键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E6%A0%BC%E5%BC%8F"><span class="nav-text">二、格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC"><span class="nav-text">三、合并单元格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E5%88%86%E5%88%97"><span class="nav-text">四、分列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E5%88%A0%E9%99%A4%E9%87%8D%E5%A4%8D%E9%A1%B9"><span class="nav-text">五、删除重复项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E6%95%B0%E6%8D%AE%E9%80%8F%E8%A7%86%E8%A1%A8"><span class="nav-text">六、数据透视表（★★★★★）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E6%9D%A1%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="nav-text">七、条件格式（★★★★★）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E6%95%B0%E6%8D%AE%E6%9C%89%E6%95%88%E6%80%A7%E6%95%B0%E6%8D%AE%E9%AA%8C%E8%AF%81%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%8B%E6%8B%89%E8%8F%9C%E5%8D%95"><span class="nav-text">八、数据有效性&#x2F;数据验证（自定义下拉菜单）（★★★★★）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E8%AE%BE%E7%BD%AE%E4%B8%BA%E5%8F%AF%E9%80%89%E7%9A%84%E5%80%BC"><span class="nav-text">8.1 直接设置为可选的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E8%A1%A8%E6%A0%BC"><span class="nav-text">8.2 引用表格</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E8%87%AA%E5%AE%9A%E4%B9%89%E5%90%8D%E7%A7%B0"><span class="nav-text">九、自定义名称</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E6%9F%A5%E6%89%BE%E5%85%AC%E5%BC%8F%E9%94%99%E8%AF%AF"><span class="nav-text">十、查找公式错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%B8%80%E5%88%86%E7%BB%84%E5%92%8C%E5%88%86%E7%BA%A7%E6%98%BE%E7%A4%BA"><span class="nav-text">十一、分组和分级显示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%BA%8C%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E5%BA%93windowsmac%E9%83%BD%E6%9C%89%E5%92%8C%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%94%E7%94%A8%E5%BA%94%E7%94%A8%E5%95%86%E5%BA%97"><span class="nav-text">十二、分析工具库（Windows、Mac都有）和第三方应用（应用商店）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E5%BA%93"><span class="nav-text">12.1 分析工具库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%95%86%E5%BA%97"><span class="nav-text">12.2 应用商店</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">vungjoe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/vungjoe" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;vungjoe" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:vungjoe.xyz@gmail.com" title="E-Mail → mailto:vungjoe.xyz@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.vungjoe.xyz/Excel%E6%8A%80%E5%B7%A7%E5%A4%A7%E6%8F%AD%E7%A7%98.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="vungjoe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="VUNGJOE'S BLOG">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Excel技巧大揭密
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-03-08 00:56:46" itemprop="dateCreated datePublished" datetime="2019-03-08T00:56:46+08:00">2019-03-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2019-03-09 15:48:46" itemprop="dateModified" datetime="2019-03-09T15:48:46+08:00">2019-03-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">数据分析</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/Excel/" itemprop="url" rel="index"><span itemprop="name">Excel</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>参考文档：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MjM5NjEyMDI2MQ==&amp;mid=2455946754&amp;idx=1&amp;sn=1b906dde38b58d06be310870792000d7&amp;chksm=b17875a8860ffcbef473aa561c64f191ddd5240893bd671491354cc12733dcff6a065c942992&amp;scene=21%23wechat_redirect">数据分析：Excel技巧大揭秘</a></p>
+<p>这是学习《七周成为数据分析师》系列的第 2 篇笔记。</p>
+<hr />
+<p>主要学习带 “★” 的内容。</p>
+<h2 id="一快捷键">一、快捷键</h2>
+<p>以下是 Windows 系统中 Excel 的快捷键。如果是 Mac 系统，一般把 Ctrl 换成 Command 键即可。</p>
+<table>
+<thead>
+<tr class="header">
+<th>组合键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ctrl+方向键</td>
+<td>快速移动光标到数据边缘</td>
+</tr>
+<tr class="even">
+<td>Ctrl+Shift+方向键</td>
+<td>快速框选单元格，选择到数据边缘</td>
+</tr>
+<tr class="odd">
+<td>Ctrl+空格</td>
+<td>选定整列</td>
+</tr>
+<tr class="even">
+<td>Shift+空格</td>
+<td>选定整行</td>
+</tr>
+<tr class="odd">
+<td>Ctrl+A</td>
+<td>选择这整张表格内容</td>
+</tr>
+<tr class="even">
+<td>Alt+Enter</td>
+<td>单元格内换行</td>
+</tr>
+<tr class="odd">
+<td>Ctrl+Enter</td>
+<td>选中一片区域后，以当前单元格为始，向下填充数据和函数。一般用在定位的下一步</td>
+</tr>
+<tr class="even">
+<td>Ctrl+G</td>
+<td>定位，在一片区域中选择一些特殊的单元格（比如空单元格等等）</td>
+</tr>
+</tbody>
+</table>
+<span id="more"></span>
+<h2 id="二格式">二、格式</h2>
+<p>主要注意3类，数值、文本和时间。</p>
+<h2 id="三合并单元格">三、合并单元格</h2>
+<p>单元格作为报表整理使用，除非是最终输出格式，例如打印。否则<strong>不要随意合并单元格</strong>。</p>
+<p>一旦使用合并单元格，绝大多数函数都不能正常使用，影响批量的数据处理和格式转换。合并单元格也会造成Python和SQL的读取错误。</p>
+<h2 id="四分列">四、分列</h2>
+<p>比较简单，了解即可。</p>
+<h2 id="五删除重复项">五、删除重复项</h2>
+<p>使用删除重复项功能时，会永久删除重复数据。故执行本操作前，建议备份数据。</p>
+<h2 id="六数据透视表">六、数据透视表（★★★★★）</h2>
+<p>数据透视表是计算、汇总和分析数据的强大工具，可助你了解数据中的对比情况、模式和趋势。</p>
+<ul>
+<li>使用数据透视表时，建议新建 sheet 工作表来展示其结果。</li>
+</ul>
+<h2 id="七条件格式">七、条件格式（★★★★★）</h2>
+<figure>
+<img src="https://i.loli.net/2019/03/08/5c828dc5167bc.png" alt="条件格式1.png" /><figcaption>条件格式1.png</figcaption>
+</figure>
+<p>条件格式可提供视觉提示，帮助你快速理解数据。比如突出显示我们想要的信息，要做的只是提供一个规则。</p>
+<ul>
+<li>具体需要怎样的规则，自己看提示就好，也比较简单。可以实现下面的功能。
+<ul>
+<li>直观显示数据的大小</li>
+</ul></li>
+</ul>
+<figure>
+<img src="https://i.loli.net/2019/03/08/5c828e50b3715.png" alt="条件格式2.png" /><figcaption>条件格式2.png</figcaption>
+</figure>
+<h2 id="八数据有效性数据验证自定义下拉菜单">八、数据有效性/数据验证（自定义下拉菜单）（★★★★★）</h2>
+<p>有两种方式来实现此功能：数据较少时直接写列表，数据较多时引用其他位置的单元格内容。</p>
+<h3 id="直接设置为可选的值">8.1 直接设置为可选的值</h3>
+<p>衣服的三个型号</p>
+<figure>
+<img src="https://i.loli.net/2019/03/09/5c82a577d20ba.png" alt="数据验证2.png" /><figcaption>数据验证2.png</figcaption>
+</figure>
+<h3 id="引用表格">8.2 引用表格</h3>
+<p>先自定义一个名称“部门”，方便后面引用</p>
+<figure>
+<img src="https://i.loli.net/2019/03/09/5c82a577c678f.png" alt="Screen Shot 2019-03-09 at 01.23.26.png" /><figcaption>Screen Shot 2019-03-09 at 01.23.26.png</figcaption>
+</figure>
+<p>设置单元格的数据验证，直接引用名称即可</p>
+<figure>
+<img src="https://i.loli.net/2019/03/09/5c82a577c4964.png" alt="Screen Shot 2019-03-09 at 01.24.19.png" /><figcaption>Screen Shot 2019-03-09 at 01.24.19.png</figcaption>
+</figure>
+<h2 id="九自定义名称">九、自定义名称</h2>
+<p>在 "公式" &gt; "定义名称" &gt; "名称管理器" 中创建、删除、管理名称。</p>
+<p>自定义名称在 8.2 中已经演示过了，这里不再赘述。</p>
+<h2 id="十查找公式错误">十、查找公式错误</h2>
+<p>公式报错也不知道错在哪里时候可以使用该功能，尤其是各类IF嵌套或者多表关联，逻辑复杂时。查找公式错误是逐步运算的，很方便定位。</p>
+<figure>
+<img src="https://i.loli.net/2019/03/09/5c82acd05774e.png" alt="错误检查.png" /><figcaption>错误检查.png</figcaption>
+</figure>
+<h2 id="十一分组和分级显示">十一、分组和分级显示</h2>
+<p>详细的教程请访问官网进行学习：</p>
+<p><a target="_blank" rel="noopener" href="https://support.office.com/zh-cn/article/%E5%AF%B9%E5%B7%A5%E4%BD%9C%E8%A1%A8%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E8%BF%9B%E8%A1%8C%E5%88%86%E7%BA%A7%E6%98%BE%E7%A4%BA%EF%BC%88%E5%88%86%E7%BB%84%EF%BC%89-08ce98c4-0063-4d42-8ac7-8278c49e9aff">对工作表中的数据进行分级显示（分组）</a></p>
+<h2 id="十二分析工具库windowsmac都有和第三方应用应用商店">十二、分析工具库（Windows、Mac都有）和第三方应用（应用商店）</h2>
+<h3 id="分析工具库">12.1 分析工具库</h3>
+<p>分析工具库，在 “工具-Excel加载项”进行添加。</p>
+<h3 id="应用商店">12.2 应用商店</h3>
+<p>可以自行在应用商店添加自己想使用的功能。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Excel/" rel="tag"># Excel</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Excel%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8.html" rel="prev" title="Excel常见函数的使用">
+                  <i class="fa fa-chevron-left"></i> Excel常见函数的使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96.html" rel="next" title="数据可视化">
+                  数据可视化 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">vungjoe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+</body>
+</html>

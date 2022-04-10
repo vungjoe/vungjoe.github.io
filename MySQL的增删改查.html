@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.vungjoe.xyz","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="在数据分析中，增删改查最重要的就是查了，所以本篇笔记将重点放在查询上。 这里以《七周成为数据分析师》中的案例进行说明。  一、增——INSERT 官方文档：INSERT Syntax 在表中新增一条记录，需使用 INSERT ，其基本语法： 123INSERT INTO tb1_name col VALUES(val);INSERT INTO tb1_name (col1, col2) VALUE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL的增删改查">
+<meta property="og:url" content="https://blog.vungjoe.xyz/MySQL%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5.html">
+<meta property="og:site_name" content="VUNGJOE&#39;S BLOG">
+<meta property="og:description" content="在数据分析中，增删改查最重要的就是查了，所以本篇笔记将重点放在查询上。 这里以《七周成为数据分析师》中的案例进行说明。  一、增——INSERT 官方文档：INSERT Syntax 在表中新增一条记录，需使用 INSERT ，其基本语法： 123INSERT INTO tb1_name col VALUES(val);INSERT INTO tb1_name (col1, col2) VALUE">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-08-23T09:19:34.000Z">
+<meta property="article:modified_time" content="2019-03-28T15:14:28.000Z">
+<meta property="article:author" content="vungjoe">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.vungjoe.xyz/MySQL%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":"","permalink":"https://blog.vungjoe.xyz/MySQL%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5.html","path":"MySQL的增删改查.html","title":"MySQL的增删改查"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MySQL的增删改查 | VUNGJOE'S BLOG</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">VUNGJOE'S BLOG</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E5%A2%9Einsert"><span class="nav-text">一、增——INSERT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%88%A0delete"><span class="nav-text">二、删——DELETE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E6%94%B9update"><span class="nav-text">三、改——UPDATE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E6%9F%A5select"><span class="nav-text">四、查——SELECT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#where-%E6%9D%A1%E4%BB%B6%E5%88%A4%E6%96%AD"><span class="nav-text">4.1 WHERE 条件判断</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E4%B8%A4%E4%B8%AA%E6%88%96%E6%9B%B4%E5%A4%9A%E6%9D%A1%E4%BB%B6-andor"><span class="nav-text">4.1.1 连接两个或更多条件 AND、OR、()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#in"><span class="nav-text">4.1.2 IN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E5%80%BC%E5%88%A4%E6%96%AD"><span class="nav-text">4.1.3 数值判断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#like-%E6%A8%A1%E7%B3%8A%E6%9F%A5%E6%89%BE"><span class="nav-text">4.1.4 LIKE 模糊查找</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#group-by-%E5%88%86%E7%BB%84"><span class="nav-text">4.2 GROUP BY 分组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#order-by-%E6%8E%92%E5%BA%8F"><span class="nav-text">4.3 ORDER BY 排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="nav-text">4.4 嵌套查询&#x2F;子查询</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">vungjoe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/vungjoe" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;vungjoe" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:vungjoe.xyz@gmail.com" title="E-Mail → mailto:vungjoe.xyz@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.vungjoe.xyz/MySQL%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="vungjoe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="VUNGJOE'S BLOG">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL的增删改查
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-08-23 17:19:34" itemprop="dateCreated datePublished" datetime="2017-08-23T17:19:34+08:00">2017-08-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2019-03-28 23:14:28" itemprop="dateModified" datetime="2019-03-28T23:14:28+08:00">2019-03-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux-%E8%BF%90%E7%BB%B4%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">Linux 运维基础</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux-%E8%BF%90%E7%BB%B4%E5%9F%BA%E7%A1%80/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>在数据分析中，增删改查最重要的就是查了，所以本篇笔记将重点放在查询上。</p>
+<p>这里以<a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/mp/homepage?__biz=MjM5NjEyMDI2MQ==&amp;hid=1&amp;sn=91baa97c89185efabb2f690dc588481f#wechat_redirect">《七周成为数据分析师》</a>中的案例进行说明。</p>
+<hr />
+<h2 id="一增insert">一、增——INSERT</h2>
+<p>官方文档：<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/insert-select.html">INSERT Syntax</a></p>
+<p>在表中新增一条记录，需使用 INSERT ，其基本语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO tb1_name col VALUES(val);</span><br><span class="line">INSERT INTO tb1_name (col1, col2) VALUES(val1, val2);</span><br><span class="line">INSERT INTO tb1_name (col1, col2) VALUES(val1, val2), (val3, val4), (val5,val6);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>字段数和值的数量必须相同（逗号一样多），如果该字段处是空白，则使用默认值进行填充。</li>
+<li>可以一次插入多条记录，如第三句</li>
+</ul>
+<h2 id="二删delete">二、删——DELETE</h2>
+<p>官方文档：<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/delete.html">DELETE Syntax</a></p>
+<p>删除操作需要<strong>谨慎使用</strong>，其基本语法为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DELETE FROM tb1_name</span><br><span class="line">  [WHERE where_condition]</span><br><span class="line">  [ORDER BY ...]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>以上语句的含义为删除表中符合要求的记录</li>
+</ul>
+<h2 id="三改update">三、改——UPDATE</h2>
+<p>官方文档：<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/update.html">UPDATE Syntax</a></p>
+<p>UPDATE 可以修改记录中的某个或某些字段，其基本语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UPDATE table_reference</span><br><span class="line">  SET assignment_list</span><br><span class="line">  [WHERE where_condition]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>table_reference</code>：表名</li>
+<li><code>SET assignment_list</code>：SET 语句写明了要修改的字段及其值。
+<ul>
+<li>assignment_list 怎么写: <code>assignment [, assignment] ...</code></li>
+<li>assignment：<code>col_name = value</code></li>
+</ul></li>
+</ul>
+<p>示例代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE tb1 SET name=&#x27;bbc&#x27;, id=124 WHERE id=123</span><br></pre></td></tr></table></figure>
+<h2 id="四查select">四、查——SELECT</h2>
+<p>查询语句使用 SELECT，其基本语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT column_name1,column_name2 FROM table_name</span><br><span class="line">  [WHERE where_condition]</span><br><span class="line">  [GROUP BY &#123;col_name | expr | position&#125;]</span><br><span class="line">  [ORDER BY &#123;col_name | expr | position&#125;</span><br><span class="line">    [ ASC | DESC ]]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>column_name1 是我们要查找的字段（列）
+<ul>
+<li>如果要选择多列，多个字段之间用英文的逗号 <code>,</code> 隔开</li>
+<li>可以用 <code>*</code> 代替，表示选择符合条件的所有字段</li>
+</ul></li>
+<li>WHERE 语句用于条件判断</li>
+<li>GROUP BY 用于按字段/维度进行划分</li>
+<li>如果想了解更多，请查看 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/select.html">SELECT 语法官方教程（英文）</a></li>
+</ul>
+<p>如何查询需要的信息？重点就是需要写出合适的条件语句。</p>
+<h3 id="where-条件判断">4.1 WHERE 条件判断</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">USE dataanlysis;</span><br><span class="line">SELECT * FROM dataanlysis WHERE city = &#x27;上海&#x27;;  #　筛选出上海地区的所有职位信息</span><br><span class="line">SELECT * FROM dataanlysis WHERE city = &#x27;上海&#x27; AND education = &#x27;本科&#x27;;　# 查询上海地区学历要求本科的职位</span><br><span class="line">SELECT * FROM dataanlysis WHERE city IN (&#x27;上海&#x27;,&#x27;北京&#x27;);  # 查询上海北京两地的职位信息</span><br><span class="line">SELECT * FROM dataanlysis WHERE (city = &#x27;上海&#x27; AND positionName = &#x27;数据分析师&#x27;) OR (companyId BETWEEN 10000 AND 20000); # 查询上海的数据工程师和公司 ID 在10000到20000之间的岗位信息</span><br><span class="line">SELECT * FROM dataanlysis WHERE companyId &gt; 20000; # 查询公司 ID 大于20000的岗位信息</span><br></pre></td></tr></table></figure>
+<h4 id="连接两个或更多条件-andor">4.1.1 连接两个或更多条件 AND、OR、()</h4>
+<ul>
+<li>AND 交集，OR 并集</li>
+<li>如果需要多个组合条件，可以结合括号 () 表达所需</li>
+</ul>
+<h4 id="in">4.1.2 IN</h4>
+<ul>
+<li>一个字段多个值，可以使用 IN</li>
+<li>column_name in (value1,value2)</li>
+</ul>
+<h4 id="数值判断">4.1.3 数值判断</h4>
+<ul>
+<li>如果字段数据类型是数值，则可以使用 &gt;，&lt;，&gt;=，&lt;=，!=，&lt;&gt; 进行逻辑判断
+<ul>
+<li>!= 和 &lt;&gt; 等价</li>
+</ul></li>
+<li>如果需要判断一个数值区间，则使用 BETWEEN AND。
+<ul>
+<li>BETWEEN AND 包含两个边界值</li>
+</ul></li>
+</ul>
+<h4 id="like-模糊查找">4.1.4 LIKE 模糊查找</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM dataanlysis WHERE positionName LIKE &#x27;%数据分析%&#x27;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>LIKE 用于模糊查找</li>
+<li>% 是通配符，表示任意值。示例表示不论数据分析的前后是什么，都满足要求</li>
+</ul>
+<h3 id="group-by-分组">4.2 GROUP BY 分组</h3>
+<p>GROUP BY，是数据分析中常见的语法，目的是将数据按组／维度划分。类似于 Excel 中的数据透视表，我们以 city 为例。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT city FROM dataanlysis GROUP BY city; # 查看数据库里有多少个城市的岗位信息</span><br><span class="line">SELECT city,count(1) FROM dataanlysis GROUP BY city; # 数据库里每个城市的有多少个岗位信息</span><br></pre></td></tr></table></figure>
+<ul>
+<li>直接使用<code>SELECT * FROM dataanlysis GROUP BY city</code>在 MySQL5.7.5 及之后的版本中并不能执行，这是因为该版本默认开启了 ONLY_FULL_GROUP_BY ，其要求 GROUP BY 的结果必须唯一，不能出现多个值。
+<ul>
+<li>SELECT 后面的字段名，必须包含在 GROUP BY 后面的字段中</li>
+</ul></li>
+<li>count 是聚合函数，其他的还有 max、min、sum、avg 等。</li>
+</ul>
+<h3 id="order-by-排序">4.3 ORDER BY 排序</h3>
+<p>ORDER BY，用来对数据进行排序。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM dataanlysis ORDER BY city,companySize;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ORDER BY 默认使用升序排列（即带参数 ASC ）
+<ul>
+<li>如果使用降序排列，则需要在字段后面加 DESC，如 <code>SELECT * FROM dataanlysis ORDER BY city,companySize DESC</code></li>
+</ul></li>
+</ul>
+<h3 id="嵌套查询子查询">4.4 嵌套查询/子查询</h3>
+<p>嵌套查询，就是在 FROM 后面跟的不是表名，而是一个 SQL 查询 语句。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM (SELECT * FROM dataanlysis WHERE city=&quot;上海&quot;) AS tableAlias ORDER BY companySize;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>嵌套查询（子查询）中有一个需要特别注意的点，就是每一层查询，都必须要有一个别名——当一个查询作为一个派生表来被父查询使用时，必须要有一个名称，使用 <code>AS tableAlias</code> 来给查询命名
+<ul>
+<li>如果不加 AS ，会报错 <code>Every derived table must have its own alias</code>（每个派生表都必须有自己的别名）</li>
+</ul></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/MySQL5-7-6%E5%8F%8A%E6%9B%B4%E9%AB%98%E7%89%88%E6%9C%AC%E7%9A%84%E5%AE%89%E8%A3%85.html" rel="prev" title="MySQL5.7.6及更高版本的安装">
+                  <i class="fa fa-chevron-left"></i> MySQL5.7.6及更高版本的安装
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95%E5%AF%BC%E8%87%B4MongoDB%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95.html" rel="next" title="删除数据目录导致MongoDB无法启动的解决办法">
+                  删除数据目录导致MongoDB无法启动的解决办法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">vungjoe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+</body>
+</html>

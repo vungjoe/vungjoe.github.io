@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.vungjoe.xyz","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="一、冲裁相关的几个概念介绍 1.1 冲裁的定义 冲裁是利用模具使板料沿一定轮廓线产生分离的冲压工序。冲裁使用的模具叫冲裁模。 根据变形基理的不同，冲裁可分为普通冲裁和精密冲裁，通常所说的冲裁都是指普通冲裁。精密冲裁断面光洁、精度较高，但需要专门的精冲设备和模具。在这里，我们主要讨论普通冲裁。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="冲裁工艺与模具设计（一）——冲裁变形分析">
+<meta property="og:url" content="https://blog.vungjoe.xyz/%E5%86%B2%E8%A3%81%E5%B7%A5%E8%89%BA%E4%B8%8E%E6%A8%A1%E5%85%B7%E8%AE%BE%E8%AE%A1%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%86%B2%E8%A3%81%E5%8F%98%E5%BD%A2%E5%88%86%E6%9E%90.html">
+<meta property="og:site_name" content="VUNGJOE&#39;S BLOG">
+<meta property="og:description" content="一、冲裁相关的几个概念介绍 1.1 冲裁的定义 冲裁是利用模具使板料沿一定轮廓线产生分离的冲压工序。冲裁使用的模具叫冲裁模。 根据变形基理的不同，冲裁可分为普通冲裁和精密冲裁，通常所说的冲裁都是指普通冲裁。精密冲裁断面光洁、精度较高，但需要专门的精冲设备和模具。在这里，我们主要讨论普通冲裁。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/04/30/pSv3cRBAxri1FNu.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/30/ztV7HjBWpArvi6m.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/30/5SyxCzYiKphwcvd.png">
+<meta property="og:image" content="https://i.loli.net/2020/05/04/rIWTkpJ7tQw3H8o.png">
+<meta property="og:image" content="https://i.loli.net/2020/05/04/ejw8lb9vXQL1S7q.png">
+<meta property="article:published_time" content="2020-04-30T07:50:00.000Z">
+<meta property="article:modified_time" content="2020-05-06T15:27:45.000Z">
+<meta property="article:author" content="vungjoe">
+<meta property="article:tag" content="冲裁">
+<meta property="article:tag" content="变形">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/04/30/pSv3cRBAxri1FNu.png">
+
+
+<link rel="canonical" href="https://blog.vungjoe.xyz/%E5%86%B2%E8%A3%81%E5%B7%A5%E8%89%BA%E4%B8%8E%E6%A8%A1%E5%85%B7%E8%AE%BE%E8%AE%A1%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%86%B2%E8%A3%81%E5%8F%98%E5%BD%A2%E5%88%86%E6%9E%90.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":"","permalink":"https://blog.vungjoe.xyz/%E5%86%B2%E8%A3%81%E5%B7%A5%E8%89%BA%E4%B8%8E%E6%A8%A1%E5%85%B7%E8%AE%BE%E8%AE%A1%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%86%B2%E8%A3%81%E5%8F%98%E5%BD%A2%E5%88%86%E6%9E%90.html","path":"冲裁工艺与模具设计（一）——冲裁变形分析.html","title":"冲裁工艺与模具设计（一）——冲裁变形分析"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>冲裁工艺与模具设计（一）——冲裁变形分析 | VUNGJOE'S BLOG</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">VUNGJOE'S BLOG</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E5%86%B2%E8%A3%81%E7%9B%B8%E5%85%B3%E7%9A%84%E5%87%A0%E4%B8%AA%E6%A6%82%E5%BF%B5%E4%BB%8B%E7%BB%8D"><span class="nav-text">一、冲裁相关的几个概念介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%B2%E8%A3%81%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-text">1.1 冲裁的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%B2%E8%A3%81%E5%B7%A5%E8%89%BA%E7%A7%8D%E7%B1%BB"><span class="nav-text">1.2 冲裁工艺种类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%86%B2%E8%A3%81%E5%8F%98%E5%BD%A2%E5%88%86%E6%9E%90"><span class="nav-text">二、冲裁变形分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%B2%E8%A3%81%E4%B8%AD%E7%9A%84%E6%9D%BF%E6%96%99%E5%8F%98%E5%BD%A2%E8%BF%87%E7%A8%8B"><span class="nav-text">2.1 冲裁中的板料变形过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%B9%E6%80%A7%E5%8F%98%E5%BD%A2%E9%98%B6%E6%AE%B5"><span class="nav-text">（1）弹性变形阶段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A1%91%E6%80%A7%E5%8F%98%E5%BD%A2%E9%98%B6%E6%AE%B5"><span class="nav-text">（2）塑性变形阶段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%AD%E8%A3%82%E5%88%86%E7%A6%BB%E9%98%B6%E6%AE%B5"><span class="nav-text">（3）断裂分离阶段</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%B2%E8%A3%81%E6%96%AD%E9%9D%A2%E7%89%B9%E5%BE%81"><span class="nav-text">2.2 冲裁断面特征</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A1%8C%E8%A7%92%E5%8C%BA%E5%9C%86%E8%A7%92%E5%8C%BA"><span class="nav-text">（1）塌角区（圆角区）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%89%E4%BA%AE%E5%B8%A6%E8%AF%A5%E5%8C%BA%E5%9F%9F"><span class="nav-text">（2）光亮带该区域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%AD%E8%A3%82%E5%B8%A6%E8%AF%A5%E5%8C%BA%E5%9F%9F"><span class="nav-text">（3）断裂带该区域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AF%9B%E5%88%BA%E5%B8%A6"><span class="nav-text">（4）毛刺带</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E5%86%B2%E8%A3%81%E4%BB%B6%E5%B0%BA%E5%AF%B8%E7%B2%BE%E5%BA%A6"><span class="nav-text">三、冲裁件尺寸精度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E5%86%B2%E8%A3%81%E4%BB%B6%E7%9A%84%E5%BD%A2%E7%8A%B6%E8%AF%AF%E5%B7%AE"><span class="nav-text">四、冲裁件的形状误差</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">vungjoe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/vungjoe" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;vungjoe" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:vungjoe.xyz@gmail.com" title="E-Mail → mailto:vungjoe.xyz@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.vungjoe.xyz/%E5%86%B2%E8%A3%81%E5%B7%A5%E8%89%BA%E4%B8%8E%E6%A8%A1%E5%85%B7%E8%AE%BE%E8%AE%A1%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%86%B2%E8%A3%81%E5%8F%98%E5%BD%A2%E5%88%86%E6%9E%90.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="vungjoe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="VUNGJOE'S BLOG">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          冲裁工艺与模具设计（一）——冲裁变形分析
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-04-30 15:50:00" itemprop="dateCreated datePublished" datetime="2020-04-30T15:50:00+08:00">2020-04-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2020-05-06 23:27:45" itemprop="dateModified" datetime="2020-05-06T23:27:45+08:00">2020-05-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%86%B2%E5%8E%8B%E5%B7%A5%E8%89%BA/" itemprop="url" rel="index"><span itemprop="name">冲压工艺</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="一冲裁相关的几个概念介绍">一、冲裁相关的几个概念介绍</h2>
+<h3 id="冲裁的定义">1.1 冲裁的定义</h3>
+<p>冲裁是利用模具使板料沿一定轮廓线产生分离的冲压工序。冲裁使用的模具叫冲裁模。</p>
+<p>根据变形基理的不同，冲裁可分为普通冲裁和精密冲裁，通常所说的冲裁都是指普通冲裁。精密冲裁断面光洁、精度较高，但需要专门的精冲设备和模具。在这里，我们主要讨论普通冲裁。</p>
+<span id="more"></span>
+<p>下图 2-2 是冲压一个板状零件的冲裁模的典型结构及其各部分的相互尺寸关系。</p>
+<p>图 2-2 冲裁模典型结构与模具总体设计尺寸关系图</p>
+<figure>
+<img src="https://i.loli.net/2020/04/30/pSv3cRBAxri1FNu.png" alt="image.png" /><figcaption>image.png</figcaption>
+</figure>
+<h3 id="冲裁工艺种类">1.2 冲裁工艺种类</h3>
+<p>冲裁工艺的种类有很多，常用的有切断、落料、冲孔、切边（修边）、切口、剖切等，其中，落料和冲孔应用最多。</p>
+<ul>
+<li>落料是沿工件的外形封闭轮廓线进行冲裁，冲下的部分为工件。</li>
+<li>冲孔是沿工件的内形封闭轮廓线进行冲裁，冲下部分为废料。</li>
+</ul>
+<p>对于图 2-3 中所示的垫圈即由落料和冲孔两道工序完成——图（a）所示为落料，图（b）所示为冲孔，图（c）为最后完成的垫圈。</p>
+<p>图 2-3 垫圈的落料与冲孔</p>
+<figure>
+<img src="https://i.loli.net/2020/04/30/ztV7HjBWpArvi6m.png" alt="image.png" /><figcaption>image.png</figcaption>
+</figure>
+<p><strong>落料和冲孔的变形性质完全相同，但在进行模具设计时，模具尺寸的确定方法不同，因此，工艺上必须作为两个工序加以区分。</strong></p>
+<p>冲裁工艺是冲压生产的主要方法之一，主要有以下用途：</p>
+<ul>
+<li>直接冲出成品零件</li>
+<li>为弯曲、拉延、成形等其他工序备料</li>
+<li>对已成形的工序进行再加工</li>
+</ul>
+<h2 id="二冲裁变形分析">二、冲裁变形分析</h2>
+<h3 id="冲裁中的板料变形过程">2.1 冲裁中的板料变形过程</h3>
+<p>在冲裁过程中，冲裁模的凸、凹模组成上下刃口，在压力机的作用下，凸模逐渐下降，接触被冲压材料并对其加压，使材料发生变形直至分离。板料的冲裁是瞬间完成的。当模具间隙正常时，整个冲裁变形过程分离过程大致可分为三个阶段，如图 2-4 所示。</p>
+<p>图 2-4 冲裁时板料的变形过程</p>
+<figure>
+<img src="https://i.loli.net/2020/04/30/5SyxCzYiKphwcvd.png" alt="image.png" /><figcaption>image.png</figcaption>
+</figure>
+<h4 id="弹性变形阶段">（1）弹性变形阶段</h4>
+<p>当凸模开始接触板料并下压时，凸模与凹模刃口周围的板料产生应力集中现象，使材料产生弹性压缩、弯曲、拉深等复杂的变形。板料略有挤入凹模洞口的现象。此时，凸模下的材料略有弯曲，凹模上的材料则向上翘。</p>
+<p>间隙越大，弯曲和上翘越严重；随着凸模继续下压，直到材料内的应力达到弹性极限。</p>
+<h4 id="塑性变形阶段">（2）塑性变形阶段</h4>
+<p>当凸模继续下压，材料内的应力达到屈服点，材料进入塑性变形阶段。</p>
+<p>凸模切入板料上部，同时板料下部挤入凹模洞口。板料剪切面的边缘由于弯曲拉伸等作用形成圆角，同时由于塑性剪切变形在断面上形成一小段光亮且与板面垂直的直边。随着凸模挤入板料深度的加大，塑性变形程度增大，变形区材料硬化加剧，冲裁变形抗力不断增大，直至刃口附近侧面的材料由于拉应力的作用出现微裂纹时，塑性变形阶段结束，此时冲裁变形抗力达到最大值。</p>
+<p>由于凸、凹模间存在间隙，故在这个过程中板料还伴随着弯曲和拉伸变形。间隙越大，弯曲和拉伸变形也越大。</p>
+<h4 id="断裂分离阶段">（3）断裂分离阶段</h4>
+<p>当板料内的应力达到强度极限后，凸模继续下压，凹模刃口附近的侧面材料内产生裂纹，紧接着凸模刃口附近的侧面材料产生裂纹。已形成的上下微裂纹随凸模继续压入不断向材料内部扩展，当上下裂纹重合时，板料即被剪断分离。随后，凸模将分离的材料推入凹模洞口中。</p>
+<p>由上述冲裁变形过程的分析可知，冲裁过程的变形是很复杂的，除了剪切变形外，还存在着拉伸、弯曲、和横向挤压等变形。所以冲裁件及废料的平面不平整，常有翘曲现象。</p>
+<h3 id="冲裁断面特征">2.2 冲裁断面特征</h3>
+<p>在正常冲裁工作条件下，凸模刃口产生的剪切裂纹与凹模刃口产生的剪切裂纹是相互汇合的，这时可得到如图 2-5 所示的冲裁件断面，它具有以下 4 个特征区。</p>
+<p>图 2-5 冲裁件的断面特征</p>
+<figure>
+<img src="https://i.loli.net/2020/05/04/rIWTkpJ7tQw3H8o.png" alt="image.png" /><figcaption>image.png</figcaption>
+</figure>
+<h4 id="塌角区圆角区">（1）塌角区（圆角区）</h4>
+<p>该区域是由于当凸模刃口压入材料时，刃口附近的材料产生弯曲和伸长变形，材料被拉入凹模间隙形成的。冲孔工序中，塌角位于孔断面的小端；落料工序中，塌角位于工件断面的大端。</p>
+<p><strong>板料的塑性越好，凸、凹模之间的间隙越大，形成的塌角也越大。</strong></p>
+<h4 id="光亮带该区域">（2）光亮带该区域</h4>
+<p>发生在塑性变形阶段。当刃口切入板料后，板料与凸、凹模刃口的侧表面挤压而形成光亮垂直的断面。通常占全断面的1/3~1/2。冲孔工序中，光亮带位于孔断面的小端；落料工序中，光亮带位于零件断面的大端。光亮带通常是测量带面，影响着零件的尺寸精度。</p>
+<p><strong>板料塑性越好，凸、凹模之间的间隙越小，光亮带的宽度越宽。</strong></p>
+<h4 id="断裂带该区域">（3）断裂带该区域</h4>
+<p>是在断裂阶段形成。断裂带紧挨着光亮带，是由刃口附近的微裂纹在拉应力的作用下不断扩展而形成的撕裂面，断裂带表面粗糙，并带有 4°~6°的斜角。在冲孔工序中，断裂带位于孔断面的大端；在落料工序中， 断裂位于零件断面的小端。</p>
+<p><strong>凸、凹模之间的间隙越大，断裂带越宽切斜角越大。</strong></p>
+<h4 id="毛刺带">（4）毛刺带</h4>
+<p>毛刺带的形成是由于在塑性变形阶段后期，凸模和凹模的刃口切入被加工板料一定深度时，刃口正面材料被压缩，刃尖部分是高静压应力状态，使裂纹的起点不会在刃尖处发生，而是在模具侧面距刃口不远的地方发生，在拉应力的作用下，裂纹加长，材料断裂而产生毛刺，裂纹的产生点和刃口尖的距离称为毛刺的高度。在普通冲裁中，毛刺是不可避免的。</p>
+<p>影响冲裁件断面质量的因素很多，其中影响最大的就是凸、凹模之间的冲裁间隙。在具有合理间隙的冲裁条件下，所得到的冲裁件断面塌角较小，有正常的光亮带，其断裂带虽然粗糙，但比较平坦，斜度较小，毛刺也不明显。</p>
+<h2 id="三冲裁件尺寸精度">三、冲裁件尺寸精度</h2>
+<p>冲裁件的尺寸精度，是指冲裁件的实际尺寸与图纸上基本尺寸之差。差值越小，精度越高。这个差值包括两方面的偏差：一个是模具本身的制造偏差，一个是冲裁件相对于凸模或凹模尺寸的偏差。</p>
+<p>冲裁件的尺寸精度与许多因素有关，如冲模的制造精度、冲裁间隙、材料性质等，其中主要因素是冲裁间隙。</p>
+<p>（1）<strong>冲模的制造精度</strong></p>
+<p>冲模的制造精度对冲裁件尺寸精度有直接影响。冲模的精度越高，在其他条件相同时，冲裁件的精度也越高。一般情况下，冲模的制造精度要比冲裁件的精度高2~4个精度等级。当冲裁模具有合理间隙与锋利刃口时，其模具制造精度与冲裁件精度的关系见表 2-1，</p>
+<p>表 2-1 冲裁件的精度</p>
+<figure>
+<img src="https://i.loli.net/2020/05/04/ejw8lb9vXQL1S7q.png" alt="image.png" /><figcaption>image.png</figcaption>
+</figure>
+<p>（2）<strong>冲裁间隙</strong></p>
+<p>当间隙过大时，板料在冲裁过程中除受剪切外还产生较大的拉伸与弯曲变形，冲裁后材料弹性恢复使冲裁件尺寸向实际方向收缩。对于落料件，其尺寸将会小于凹模尺寸，对于冲孔件，其尺寸将会大于凸模尺寸。</p>
+<p>当间隙过小时，则板料的冲裁过程中除受剪切外还会受到较大的挤压作用，冲裁后，材料的弹性恢复使冲裁件尺寸向实体的反方向胀大。对于落料件，其尺寸将会大于凹模尺寸；对于冲孔件，其尺寸将会小于凸模尺寸。</p>
+<p>当间隙合适时，在冲裁过程中，板料的变形区在剪切作用下分离，使落料件的尺寸等于凹模尺寸，冲孔件尺寸等于凸模尺寸。</p>
+<p>（3）<strong>材料的性质</strong></p>
+<p>材料的性质对材料在冲裁过程中的弹性变形量有很大影响。软钢的弹性变形量较小，冲裁后的回弹值也较小，因而零件精度高。硬钢情况正好与此相反。</p>
+<h2 id="四冲裁件的形状误差">四、冲裁件的形状误差</h2>
+<p>冲裁件的形状误差是指翘曲、扭曲、变形等缺陷。间隙过大容易引起翘曲（穹弯）；材料不平、间隙不均匀、凹模后角对材料摩擦不均匀会产生扭曲缺陷；坯料的边缘冲孔或孔距太小等原因会因胀形而产生误差。</p>
+<p>影响冲裁件形状误差的主要因素是刃口间隙。研究表明，间隙对冲裁件穹弯影响的一般规律为小间隙时，穹弯较大；间隙为材料厚度的5%~15%时穹弯较小；随着间隙的增大穹弯又增大，使冲裁件平直度降低。</p>
+<p>冲裁时，不仅要求冲制出形状、尺寸符合图纸要求的零件，而且还应有一定的质量要求。冲裁件质量包括断面质量、尺寸精度和形状误差。冲裁断面尽可能垂直、光洁、毛刺小。尺寸精度应保证在图纸规定的公差范围内。零件外形应满足图纸要求，表面应尽可能垂直，即穹弯较小。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%86%B2%E8%A3%81/" rel="tag"># 冲裁</a>
+              <a href="/tags/%E5%8F%98%E5%BD%A2/" rel="tag"># 变形</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E6%9F%A5%E6%89%BE%E4%B8%8E%E5%BC%95%E7%94%A8%E5%87%BD%E6%95%B0%E4%B9%8BLOOKUP%E3%80%81VLOOKUP%E3%80%81HLOOKUP%E5%87%BD%E6%95%B0.html" rel="prev" title="查找与引用函数之LOOKUP、VLOOKUP、HLOOKUP函数">
+                  <i class="fa fa-chevron-left"></i> 查找与引用函数之LOOKUP、VLOOKUP、HLOOKUP函数
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E5%86%B2%E8%A3%81%E5%B7%A5%E8%89%BA%E4%B8%8E%E6%A8%A1%E5%85%B7%E8%AE%BE%E8%AE%A1%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E5%86%B2%E8%A3%81%E9%97%B4%E9%9A%99%E3%80%81%E5%87%B8%E5%87%B9%E6%A8%A1%E5%88%83%E5%8F%A3%E5%B0%BA%E5%AF%B8%E8%AE%A1%E7%AE%97.html" rel="next" title="冲裁工艺与模具设计（二）——冲裁间隙、凸凹模刃口尺寸计算">
+                  冲裁工艺与模具设计（二）——冲裁间隙、凸凹模刃口尺寸计算 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">vungjoe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+</body>
+</html>

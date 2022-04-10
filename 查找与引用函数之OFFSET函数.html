@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.vungjoe.xyz","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="原文链接：说说函数中的极品——OFFSET 对于 OFFSET 函数，官方给出的解释是“返回对单元格或单元格区域中指定行数和列数的区域的引用。 返回的引用可以是单个单元格或单元格区域。 可以指定要返回的行数和列数。”。 相信大家跟我一样，看了官方的解释，完全是一头雾水，不知道这个函数到底能做什么。 这里，我先给出结论：通过 OFFSET 函数，可以生成数据区域的动态引用，这个引用再作为半成品，通过">
+<meta property="og:type" content="article">
+<meta property="og:title" content="查找与引用函数之OFFSET函数">
+<meta property="og:url" content="https://blog.vungjoe.xyz/%E6%9F%A5%E6%89%BE%E4%B8%8E%E5%BC%95%E7%94%A8%E5%87%BD%E6%95%B0%E4%B9%8BOFFSET%E5%87%BD%E6%95%B0.html">
+<meta property="og:site_name" content="VUNGJOE&#39;S BLOG">
+<meta property="og:description" content="原文链接：说说函数中的极品——OFFSET 对于 OFFSET 函数，官方给出的解释是“返回对单元格或单元格区域中指定行数和列数的区域的引用。 返回的引用可以是单个单元格或单元格区域。 可以指定要返回的行数和列数。”。 相信大家跟我一样，看了官方的解释，完全是一头雾水，不知道这个函数到底能做什么。 这里，我先给出结论：通过 OFFSET 函数，可以生成数据区域的动态引用，这个引用再作为半成品，通过">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/02/10/1citXLaC3zbZlgE.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/10/HizV7g3jU8oN4DS.png">
+<meta property="article:published_time" content="2020-02-09T16:23:25.000Z">
+<meta property="article:modified_time" content="2020-02-10T16:57:26.000Z">
+<meta property="article:author" content="vungjoe">
+<meta property="article:tag" content="函数">
+<meta property="article:tag" content="Excel">
+<meta property="article:tag" content="OFFSET">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/02/10/1citXLaC3zbZlgE.png">
+
+
+<link rel="canonical" href="https://blog.vungjoe.xyz/%E6%9F%A5%E6%89%BE%E4%B8%8E%E5%BC%95%E7%94%A8%E5%87%BD%E6%95%B0%E4%B9%8BOFFSET%E5%87%BD%E6%95%B0.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":"","permalink":"https://blog.vungjoe.xyz/%E6%9F%A5%E6%89%BE%E4%B8%8E%E5%BC%95%E7%94%A8%E5%87%BD%E6%95%B0%E4%B9%8BOFFSET%E5%87%BD%E6%95%B0.html","path":"查找与引用函数之OFFSET函数.html","title":"查找与引用函数之OFFSET函数"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>查找与引用函数之OFFSET函数 | VUNGJOE'S BLOG</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">VUNGJOE'S BLOG</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80offset-%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97%E6%96%B9%E5%BC%8F%E5%85%B6%E7%BB%93%E6%9E%9C%E6%98%AF%E5%BC%95%E7%94%A8"><span class="nav-text">一、OFFSET 函数的运算方式——其结果是引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8Coffset-%E5%87%BD%E6%95%B0%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-text">二、OFFSET 函数的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E6%B1%87%E6%80%BB"><span class="nav-text">2.1 动态汇总</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE%E9%80%8F%E8%A7%86%E8%A1%A8%E7%9A%84%E6%BA%90%E6%95%B0%E6%8D%AE"><span class="nav-text">2.2 动态更新数据透视表的源数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%9B%BE%E8%A1%A8"><span class="nav-text">2.3 动态图表</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">vungjoe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/vungjoe" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;vungjoe" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:vungjoe.xyz@gmail.com" title="E-Mail → mailto:vungjoe.xyz@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.vungjoe.xyz/%E6%9F%A5%E6%89%BE%E4%B8%8E%E5%BC%95%E7%94%A8%E5%87%BD%E6%95%B0%E4%B9%8BOFFSET%E5%87%BD%E6%95%B0.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="vungjoe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="VUNGJOE'S BLOG">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          查找与引用函数之OFFSET函数
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-02-10 00:23:25" itemprop="dateCreated datePublished" datetime="2020-02-10T00:23:25+08:00">2020-02-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2020-02-11 00:57:26" itemprop="dateModified" datetime="2020-02-11T00:57:26+08:00">2020-02-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">数据分析</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/Excel/" itemprop="url" rel="index"><span itemprop="name">Excel</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>原文链接：<a target="_blank" rel="noopener" href="http://club.excelhome.net/forum.php?mod=viewthread&amp;tid=1242766&amp;extra=page=1">说说函数中的极品——OFFSET</a></p>
+<p>对于 OFFSET 函数，官方给出的解释是“返回对单元格或单元格区域中指定行数和列数的区域的引用。 返回的引用可以是单个单元格或单元格区域。 可以指定要返回的行数和列数。”。</p>
+<p>相信大家跟我一样，看了官方的解释，完全是一头雾水，不知道这个函数到底能做什么。</p>
+<p>这里，我先给出结论：通过 OFFSET 函数，可以生成数据区域的动态引用，这个引用再作为半成品，通过后续的加工处理，就可以为图表和透视表提供动态的数据源、为其他函数生成特定的引用了。</p>
+<span id="more"></span>
+<h2 id="一offset-函数的运算方式其结果是引用">一、OFFSET 函数的运算方式——其结果是引用</h2>
+<p>用法：</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">OFFSET</span>(reference,<span class="built_in">rows</span>,cols,[height],[width])</span><br></pre></td></tr></table></figure>
+<p>说明：</p>
+<ul>
+<li>第一个参数 reference：基点
+<ul>
+<li>基点可以是单个单元格，也可以是相连的多个单元格</li>
+</ul></li>
+<li>第二个参数 rows：要偏移几行，向下为正，向上为负</li>
+<li>第三个参数 cols：要偏移几列，向右为正，向左为负</li>
+<li>第四个参数 height：新引用几行</li>
+<li>第五个参数 width：新引用几列</li>
+<li>如果不写明第四个和第五个参数，新引用的大小就和基点一样大小。</li>
+</ul>
+<p>下面通过几个例子来练习 OFFSET 函数的用法。</p>
+<p>示例1：图中有填充颜色的单元格为基点，新引用是各方框内有数据的部分。要求对数据区域进行求和（最后一个体会负数的用法）。</p>
+<figure>
+<img src="https://i.loli.net/2020/02/10/1citXLaC3zbZlgE.png" alt="image.png" /><figcaption>image.png</figcaption>
+</figure>
+<p>基点1：在 B9 中输入 ，两侧的花括号是组合三键（Ctrl+Alt+Enter）按出来的。可以看到结果是 1600。</p>
+<figure>
+<img src="https://i.loli.net/2020/02/10/HizV7g3jU8oN4DS.png" alt="image.png" /><figcaption>image.png</figcaption>
+</figure>
+<p>说明：这里的 OFFSET 函数结果是对 D4:G7 单元格的引用，然后对其进行求和。</p>
+<p>其他的几个自行练习，体会其用法。</p>
+<h2 id="二offset-函数的应用">二、OFFSET 函数的应用</h2>
+<h3 id="动态汇总">2.1 动态汇总</h3>
+<p>详看 <a href="https://blog.vungjoe.xyz/%E6%9F%A5%E6%89%BE%E4%B8%8E%E5%BC%95%E7%94%A8%E5%87%BD%E6%95%B0%E4%B9%8BMATCH%E5%87%BD%E6%95%B0%E7%AE%80%E4%BB%8B.html">查找与引用函数之MATCH函数</a> 中的2.3。</p>
+<h3 id="动态更新数据透视表的源数据">2.2 动态更新数据透视表的源数据</h3>
+<p>详看 <a href="">数据透视表</a> 中的2.1。</p>
+<h3 id="动态图表">2.3 动态图表</h3>
+<p>详看 <a href="https://blog.vungjoe.xyz/Excel%E5%9B%BE%E8%A1%A8.html">Excel图表</a> 中的 三。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%87%BD%E6%95%B0/" rel="tag"># 函数</a>
+              <a href="/tags/Excel/" rel="tag"># Excel</a>
+              <a href="/tags/OFFSET/" rel="tag"># OFFSET</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E6%9F%A5%E6%89%BE%E4%B8%8E%E5%BC%95%E7%94%A8%E5%87%BD%E6%95%B0%E4%B9%8BINDEX%E5%87%BD%E6%95%B0.html" rel="prev" title="查找与引用函数之INDEX函数">
+                  <i class="fa fa-chevron-left"></i> 查找与引用函数之INDEX函数
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Excel%E5%9B%BE%E8%A1%A8.html" rel="next" title="Excel图表">
+                  Excel图表 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">vungjoe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+</body>
+</html>

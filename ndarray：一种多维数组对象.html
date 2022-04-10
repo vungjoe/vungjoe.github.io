@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.vungjoe.xyz","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="NumPy 最重要的一个特点就是其 N 维数组对象（即 ndarray），该对象是一个快速而灵活的大数据容器。你可以利用这种数组对整块数据执行一些数学运算，其语法跟标量元素之间的运算一样。 引入 NumPy： 1import numpy as np">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ndarray：一种多维数组对象">
+<meta property="og:url" content="https://blog.vungjoe.xyz/ndarray%EF%BC%9A%E4%B8%80%E7%A7%8D%E5%A4%9A%E7%BB%B4%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1.html">
+<meta property="og:site_name" content="VUNGJOE&#39;S BLOG">
+<meta property="og:description" content="NumPy 最重要的一个特点就是其 N 维数组对象（即 ndarray），该对象是一个快速而灵活的大数据容器。你可以利用这种数组对整块数据执行一些数学运算，其语法跟标量元素之间的运算一样。 引入 NumPy： 1import numpy as np">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-28T17:25:30.000Z">
+<meta property="article:modified_time" content="2020-02-28T17:25:30.000Z">
+<meta property="article:author" content="vungjoe">
+<meta property="article:tag" content="Numpy">
+<meta property="article:tag" content="ndarray">
+<meta property="article:tag" content="转置">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.vungjoe.xyz/ndarray%EF%BC%9A%E4%B8%80%E7%A7%8D%E5%A4%9A%E7%BB%B4%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":"","permalink":"https://blog.vungjoe.xyz/ndarray%EF%BC%9A%E4%B8%80%E7%A7%8D%E5%A4%9A%E7%BB%B4%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1.html","path":"ndarray：一种多维数组对象.html","title":"ndarray：一种多维数组对象"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ndarray：一种多维数组对象 | VUNGJOE'S BLOG</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">VUNGJOE'S BLOG</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E5%88%9B%E5%BB%BA-ndarray"><span class="nav-text">一、创建 ndarray</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#array-%E5%87%BD%E6%95%B0"><span class="nav-text">1.1 array 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-text">1.2 NumPy 的数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-ndarray-%E6%97%B6%E6%8C%87%E5%AE%9A-dtype"><span class="nav-text">创建 ndarray 时指定 dtype</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#numpy-%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-1"><span class="nav-text">NumPy 的数据类型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8Cnumpy-%E6%95%B0%E7%BB%84%E7%9A%84%E8%BF%90%E7%AE%97"><span class="nav-text">二、NumPy 数组的运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E7%B4%A2%E5%BC%95%E5%92%8C%E5%88%87%E7%89%87"><span class="nav-text">三、索引和切片</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E7%B4%A2%E5%BC%95%E5%92%8C%E5%88%87%E7%89%87"><span class="nav-text">3.1 基本的索引和切片</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84"><span class="nav-text">3.1.1 一维数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E7%BB%B4%E6%95%B0%E7%BB%84"><span class="nav-text">3.1.2 高维数组</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%87%E7%89%87%E7%B4%A2%E5%BC%95"><span class="nav-text">3.2 切片索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%83%E5%B0%94%E5%9E%8B%E7%B4%A2%E5%BC%95"><span class="nav-text">3.3 布尔型索引</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%95%E5%85%A5"><span class="nav-text">3.3.1 引入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E5%B8%83%E5%B0%94%E6%9D%A1%E4%BB%B6"><span class="nav-text">3.3.2 组合布尔条件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%B1%E5%BC%8F%E7%B4%A2%E5%BC%95"><span class="nav-text">3.4 花式索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E6%95%B0%E7%BB%84%E8%BD%AC%E7%BD%AE%E5%92%8C%E8%BD%B4%E5%AF%B9%E6%8D%A2"><span class="nav-text">四、数组转置和轴对换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#t-%E5%B1%9E%E6%80%A7%E8%BD%B4%E5%AF%B9%E6%8D%A2"><span class="nav-text">4.1 T 属性——轴对换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#transpose-%E6%96%B9%E6%B3%95"><span class="nav-text">4.2 transpose 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#swapaxes-%E6%96%B9%E6%B3%95"><span class="nav-text">4.3 swapaxes 方法</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">vungjoe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/vungjoe" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;vungjoe" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:vungjoe.xyz@gmail.com" title="E-Mail → mailto:vungjoe.xyz@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.vungjoe.xyz/ndarray%EF%BC%9A%E4%B8%80%E7%A7%8D%E5%A4%9A%E7%BB%B4%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="vungjoe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="VUNGJOE'S BLOG">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ndarray：一种多维数组对象
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-02-29 01:25:30" itemprop="dateCreated datePublished" datetime="2020-02-29T01:25:30+08:00">2020-02-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Python3/" itemprop="url" rel="index"><span itemprop="name">Python3</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>NumPy 最重要的一个特点就是其 N 维数组对象（即 ndarray），该对象是一个快速而灵活的大数据容器。你可以利用这种数组对整块数据执行一些数学运算，其语法跟标量元素之间的运算一样。</p>
+<p>引入 NumPy：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<ul>
+<li>这个是引入 NumPy 的习惯用法</li>
+<li>也可以使用 from numpy import *，但不建议使用此种方式。这是因为：
+<ul>
+<li>NumPy 的命名空间很大，包含许多函数</li>
+<li>其中一些的名字与 Python 内置的函数重名（比如 min 和 max）</li>
+</ul></li>
+</ul>
+<p>ndarray 理解：</p>
+<ul>
+<li>ndarray 是一个通用的同构数据多维容器——也就是说其中的元素必须是相同类型的</li>
+<li>每个数组都有一个 shape（一个表示各维度大小的元素）和一个 dtype（一个用于说明数组数据类型的对象）</li>
+</ul>
+<h2 id="一创建-ndarray">一、创建 ndarray</h2>
+<h3 id="array-函数">1.1 array 函数</h3>
+<p>创建数组最简单的办法就是使用 array 函数。它接受一切序列型的对象（包括其他数组），然后产生一个新的含有传入数据的 NumPy 数组。</p>
+<p>以一个列表的转换为例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">1</span>]: data1 = [<span class="number">1</span>,<span class="number">3</span>,<span class="number">4.5</span>,<span class="number">6.7</span>,<span class="number">8.9</span>,<span class="number">10</span>]</span><br><span class="line"></span><br><span class="line">In [<span class="number">2</span>]: arr1 = np.array(data1)</span><br><span class="line"></span><br><span class="line">In [<span class="number">3</span>]: data2 = [[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>],[<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>]]</span><br><span class="line"></span><br><span class="line">In [<span class="number">4</span>]: arr2 = np.array(data2)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1*6 数组</span></span><br><span class="line">In [<span class="number">5</span>]: arr1</span><br><span class="line">Out[<span class="number">5</span>]: array([ <span class="number">1.</span> ,  <span class="number">3.</span> ,  <span class="number">4.5</span>,  <span class="number">6.7</span>,  <span class="number">8.9</span>, <span class="number">10.</span> ])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2*4 数组</span></span><br><span class="line">In [<span class="number">6</span>]: arr2</span><br><span class="line">Out[<span class="number">6</span>]: array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>],</span><br><span class="line">               [<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]])</span><br></pre></td></tr></table></figure>
+<p><strong>数组创建函数</strong></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>array</td>
+<td>将输入的数据（列表、元组、数组或其他序列类型）转换为 ndarray。要么推断出 dtypt，要么特别指定 dtype。默认直接复制输入数据</td>
+</tr>
+<tr class="even">
+<td>asarray</td>
+<td>将输入转换为 ndarray，如果输入本身就是一个 ndarray 则不进行复制</td>
+</tr>
+<tr class="odd">
+<td>arange</td>
+<td>类似于 Python 内置的 range，但返回的是一个 ndarray 而不是一个列表</td>
+</tr>
+<tr class="even">
+<td>ones,ones_like</td>
+<td>根据指定的形状和 dtype 创建一个全为 1 的数组。one_like 则是以另一个数组为参数，并根据其形状和 dtype 创建一个全 1 数组</td>
+</tr>
+<tr class="odd">
+<td>zeros,zeros_like</td>
+<td>类似 ones 和 ones_like，只不过产生的是全 0 数组</td>
+</tr>
+<tr class="even">
+<td>empty,empty_like</td>
+<td>创建新数组，只分配内存空间但不填充任何值</td>
+</tr>
+<tr class="odd">
+<td>full,full_like</td>
+<td>用 fill value 中的所有值，根据指定形状和 dtype 创建一个数组full_like 使用另一个数组，用相同的形状和 dtype</td>
+</tr>
+<tr class="even">
+<td>eye,identity</td>
+<td>创建一个正方的 N X N 单位矩阵（对角线为全为 1，其余为 0）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="numpy-的数据类型">1.2 NumPy 的数据类型</h3>
+<p>dtype （数据类型）是一个特殊的对象，它含有 ndarray 将一块内存解释为特定数据类型所需的信息</p>
+<h4 id="创建-ndarray-时指定-dtype">创建 ndarray 时指定 dtype</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">7</span>]: arr3 = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], dtype=np.float64)</span><br><span class="line"></span><br><span class="line">In [<span class="number">8</span>]: arr4 = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], dtype=np.int32)</span><br><span class="line"></span><br><span class="line">In [<span class="number">9</span>]: arr3.dtypeOut[<span class="number">9</span>]: dtype(<span class="string">&#x27;float64&#x27;</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="number">10</span>]: arr4.dtype</span><br><span class="line">Out[<span class="number">10</span>]: dtype(<span class="string">&#x27;int32&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="numpy-的数据类型-1">NumPy 的数据类型</h4>
+<p>dtype 是 NumPy 灵活交互其它系统的源泉之一。多数情况下，它们直接映射到相应的机器表示，这使得“读写磁盘上的二进制数据流”以及“集成低级语言代码（如 C、Fortran）”等工作变得更加简单。数值型 dtype 的命名方式相同：一个类型名（如 float 或 int），后面跟一个用于表示各元素位长的数字。</p>
+<p>标准的双精度浮点值（即 Python 中的 float 对象）需要占用 8 字节（即 64 位）。因此，该类型在 NumPy 中就记作 float64。</p>
+<table>
+<thead>
+<tr class="header">
+<th>类型</th>
+<th>类型代码</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>int8、uint8</td>
+<td>i1、u1</td>
+<td>有符号和无符号的8位（1 个字节）整型</td>
+</tr>
+<tr class="even">
+<td>int16、uint16</td>
+<td>i2、u2</td>
+<td>有符号和无符号的16位（2 个字节）整型</td>
+</tr>
+<tr class="odd">
+<td>int32、uint32</td>
+<td>i4、u4</td>
+<td>有符号和无符号的32位（4个字节）整型</td>
+</tr>
+<tr class="even">
+<td>int64、uint64</td>
+<td>i8、u8</td>
+<td>有符号和无符号的64位（8个字节）整型</td>
+</tr>
+<tr class="odd">
+<td>float16</td>
+<td>f2</td>
+<td>半精度浮点数</td>
+</tr>
+<tr class="even">
+<td>float32</td>
+<td>f4 或 f</td>
+<td>标准的单精度浮点数、与 C 的 float 兼容</td>
+</tr>
+<tr class="odd">
+<td>float64</td>
+<td>f8 或 d</td>
+<td>标准的双精度浮点数。与 C 的 double 和 Python 的 float 对象兼容</td>
+</tr>
+<tr class="even">
+<td>float128</td>
+<td>f16 或 g</td>
+<td>扩展精度浮点数</td>
+</tr>
+<tr class="odd">
+<td>complex64、complex128、complex256</td>
+<td>c8、c16、c32</td>
+<td>分别用两个 32 位、64 位或 128 位浮点数表示的复数</td>
+</tr>
+<tr class="even">
+<td>bool</td>
+<td>?</td>
+<td>存储 True 和 False 值的布尔类型</td>
+</tr>
+<tr class="odd">
+<td>object</td>
+<td>O</td>
+<td>Python 对象类型</td>
+</tr>
+<tr class="even">
+<td>string_（下划线不能少）</td>
+<td>S</td>
+<td>固定长度的字符串类型（每个字符1个字节）。例如，要创建一个长度为10的字符串，应使用 S10</td>
+</tr>
+<tr class="odd">
+<td>unicode_（下划线不能少）</td>
+<td>U</td>
+<td>固定长度的 unicode 类型（字节数由平台决定）。跟字符串的定义方式一样</td>
+</tr>
+</tbody>
+</table>
+<p><strong>astype 方法</strong>：可以将一个数组从一个 dtype 转换成另一个 dtype。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">11</span>]: float_arr4 = arr4.astype(np.float64)</span><br><span class="line"></span><br><span class="line">In [<span class="number">12</span>]: float_arr4</span><br><span class="line">Out[<span class="number">12</span>]: array([<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以看到 dtype 发生了变化，和 arr4 相比从 int32 转换成了 float64</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">13</span>]: float_arr4.dtype</span><br><span class="line">Out[<span class="number">13</span>]: dtype(<span class="string">&#x27;float64&#x27;</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="number">14</span>]: arr5 = np.array([<span class="number">3.7</span>, -<span class="number">1.2</span>, -<span class="number">2.6</span>, <span class="number">0.5</span>, <span class="number">12.9</span>, <span class="number">10.1</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="number">15</span>]: int_arr5 = arr5.astype(<span class="string">&#x27;int32&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 浮点数转换成整型，将直接删除小数部分</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">16</span>]: int_arr5</span><br><span class="line">Out[<span class="number">16</span>]: array([ <span class="number">3</span>, -<span class="number">1</span>, -<span class="number">2</span>,  <span class="number">0</span>, <span class="number">12</span>, <span class="number">10</span>])</span><br></pre></td></tr></table></figure>
+<h2 id="二numpy-数组的运算">二、NumPy 数组的运算</h2>
+<p>数组很重要，因为它使你不用编写循环即可对数据执行批量运算，NumPy 用户称其为矢量化（vectiorization）。</p>
+<p>大小相等的数组之间的任何算术运算都会将运算应用到元素级。（数据分析暂时只用到大小相等的数组之间的运算。不同大小的数组之间的运算叫做广播（broadcasting），无需深入理解）</p>
+<ul>
+<li>数组与数组运算也是将对应的元素做算术运算</li>
+<li>数组与标量的算术运算会将标量值传播到各个元素</li>
+<li>数组之间做比较会生成布尔值数组</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">17</span>]: arr6 = np.array([[<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>], [<span class="number">4.</span>, <span class="number">5.</span>, <span class="number">6.</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">18</span>]: arr6 * arr6</span><br><span class="line">Out[<span class="number">18</span>]: array([[ <span class="number">2.</span>,  <span class="number">4.</span>,  <span class="number">6.</span>],</span><br><span class="line">                [ <span class="number">8.</span>, <span class="number">10.</span>, <span class="number">12.</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">19</span>]: <span class="number">1</span>/arr6</span><br><span class="line">Out[<span class="number">19</span>]: array([[<span class="number">1.</span>        , <span class="number">0.5</span>       , <span class="number">0.33333333</span>],</span><br><span class="line">               [<span class="number">0.25</span>      , <span class="number">0.2</span>       , <span class="number">0.16666667</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">20</span>]: arr7 = np.array([[<span class="number">0.</span>, <span class="number">4.</span>, <span class="number">3.</span>], [<span class="number">7.</span>, <span class="number">2.</span>, <span class="number">12.</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">21</span>]: arr7 &gt; arr6</span><br><span class="line">Out[<span class="number">21</span>]:array([[<span class="literal">False</span>,  <span class="literal">True</span>, <span class="literal">False</span>],</span><br><span class="line">               [ <span class="literal">True</span>, <span class="literal">False</span>,  <span class="literal">True</span>]])</span><br></pre></td></tr></table></figure>
+<h2 id="三索引和切片">三、索引和切片</h2>
+<h3 id="基本的索引和切片">3.1 基本的索引和切片</h3>
+<p>NumPy 数组的索引是一个内容丰富的主题，因为选取数据子集或单个元素的方式有很多。</p>
+<h4 id="一维数组">3.1.1 一维数组</h4>
+<p>一维数组的索引和切片很简单，看起来和 Python 列表的索引与切片极其类似</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">1</span>]: arr1 = np.arange(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="number">2</span>]: arr1</span><br><span class="line">Out[<span class="number">2</span>]: array([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="number">3</span>]: arr1[<span class="number">4</span>]</span><br><span class="line">Out[<span class="number">3</span>]: <span class="number">4</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">4</span>]: arr1[::<span class="number">2</span>]</span><br><span class="line">Out[<span class="number">4</span>]: array([<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>])</span><br></pre></td></tr></table></figure>
+<p>当你将一个标量值赋值给一个切片时（如 <code>arr[5:8]=12</code>），该值会自动传播（也就说后面将会讲到的“广播”）到整个选区。跟列表最重要的区别在于，<strong>数组切片是原始数组的视图。这意味着数据不会被复制，视图上的任何修改都会直接反映到源数组上</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">5</span>]: arr1[<span class="number">3</span>:<span class="number">6</span>]=<span class="number">22</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">6</span>]: arr1</span><br><span class="line">Out[<span class="number">6</span>]: array([ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>, <span class="number">22</span>, <span class="number">22</span>, <span class="number">22</span>,  <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>,  <span class="number">9</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="number">7</span>]: arr1_slice = arr1[<span class="number">3</span>:<span class="number">5</span>]</span><br><span class="line"></span><br><span class="line">In [<span class="number">8</span>]: arr1_slice[:] = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">9</span>]: arr1</span><br><span class="line">Out[<span class="number">9</span>]: array([  <span class="number">0</span>,   <span class="number">1</span>,   <span class="number">2</span>, <span class="number">100</span>, <span class="number">100</span>,  <span class="number">22</span>,   <span class="number">6</span>,   <span class="number">7</span>,   <span class="number">8</span>,   <span class="number">9</span>])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>数组切片是原始数组的视图，所有对切片进行的修改将直接反映到源数组上</li>
+<li>切片 <code>[:]</code> 会给数组中的所有值重新赋值</li>
+<li>如果想要得到的是数组切片的一份副本而非视图，就需要明确地进行复制操作，例如 <code>arr_slice = arr[3:7].copy()</code></li>
+</ul>
+<h4 id="高维数组">3.1.2 高维数组</h4>
+<p>对于一个二维数组，各索引位置上的元素不再是标量而是一维数组</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">10</span>]: arr2 = np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>], [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">11</span>]: arr2[<span class="number">1</span>]</span><br><span class="line">Out[<span class="number">11</span>]: array([<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>])</span><br></pre></td></tr></table></figure>
+<p>如果需要索引单个元素，则有两种方式（两种方式是等价的）：</p>
+<ul>
+<li>先索引一维数组，再索引单个元素</li>
+<li>直接传入一个逗号分隔的索引列表来选取</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">12</span>]: arr2[<span class="number">1</span>][<span class="number">2</span>]</span><br><span class="line">Out[<span class="number">12</span>]: <span class="number">6</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">13</span>]: arr2[<span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">Out[<span class="number">13</span>]: <span class="number">6</span></span><br></pre></td></tr></table></figure>
+<p>类似地，对于多维数组，如果省略了后面的索引，则返回对象会是一个维度低一点的 ndarry（它含有高一级维度上的所有数据）。</p>
+<p>示例1：对于一个 2x2x3 的数组，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">14</span>]: arr3d = np.array([[[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]], [[<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>], [<span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>]]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">15</span>]: arr3d</span><br><span class="line">Out[<span class="number">15</span>]: array([[[ <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span><br><span class="line">                 [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>]],</span><br><span class="line"></span><br><span class="line">                [[ <span class="number">7</span>,  <span class="number">8</span>,  <span class="number">9</span>],</span><br><span class="line">                 [<span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>]]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">16</span>]: arr3d[<span class="number">0</span>]</span><br><span class="line">Out[<span class="number">16</span>]: array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">                [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">17</span>]: arr3d[<span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line">Out[<span class="number">17</span>]: array([<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="number">18</span>]: arr3d[<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>]</span><br><span class="line">Out[<span class="number">18</span>]: <span class="number">4</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>arr3d[0]</code> 是一个 2x3 的二维数组</li>
+<li><code>arr3d[0, 1]</code> 是一个 1x3 的一维数组</li>
+<li><code>arr3d[0, 1, 0]</code> 才是一个标量元素</li>
+</ul>
+<p>所有的切片操作和一维数组相同，都是<strong>视图操作</strong>。</p>
+<h3 id="切片索引">3.2 切片索引</h3>
+<p>ndarray 的切片语法跟 Python 列表这样的一维对象差不多</p>
+<p>一维数组：<code>arr[:2]</code> 二维数组：<code>arr[:2, :1]</code> 表示前两行，第一列</p>
+<h3 id="布尔型索引">3.3 布尔型索引</h3>
+<h4 id="引入">3.3.1 引入</h4>
+<p>假设有一个 7x4 的二维数组，还有一个 1x7 的一维数组</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">19</span>]: data = np.random.randn(<span class="number">7</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="number">20</span>]: data</span><br><span class="line">Out[<span class="number">20</span>]: array([[ <span class="number">1.19104299</span>, -<span class="number">0.59954429</span>,  <span class="number">1.77803431</span>,  <span class="number">2.18503818</span>],</span><br><span class="line">                [ <span class="number">0.23809963</span>,  <span class="number">0.65069604</span>, -<span class="number">2.1449317</span> , -<span class="number">0.64732145</span>],</span><br><span class="line">                [ <span class="number">0.97775787</span>, -<span class="number">1.06314909</span>,  <span class="number">1.12907749</span>,  <span class="number">1.08253432</span>],</span><br><span class="line">                [-<span class="number">1.72101891</span>, -<span class="number">1.27729686</span>, -<span class="number">0.5212782</span> , -<span class="number">1.8449167</span> ],</span><br><span class="line">                [-<span class="number">2.19790852</span>, -<span class="number">0.59721646</span>,  <span class="number">0.82741727</span>,  <span class="number">0.26447439</span>],</span><br><span class="line">                [-<span class="number">0.00994093</span>, -<span class="number">0.71700497</span>,  <span class="number">2.22760091</span>,  <span class="number">0.90653048</span>],</span><br><span class="line">                [ <span class="number">0.36075174</span>, -<span class="number">0.76997633</span>, -<span class="number">1.70276701</span>,  <span class="number">0.17202748</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">21</span>]: bool_arr = [<span class="literal">True</span>, <span class="literal">False</span>, <span class="literal">True</span>, <span class="literal">False</span>, <span class="literal">False</span>, <span class="literal">False</span>, <span class="literal">False</span>]</span><br><span class="line"></span><br><span class="line">In [<span class="number">22</span>]: data[bool_arr]</span><br><span class="line">Out[<span class="number">22</span>]: array([[ <span class="number">1.19104299</span>, -<span class="number">0.59954429</span>,  <span class="number">1.77803431</span>,  <span class="number">2.18503818</span>],</span><br><span class="line">                [ <span class="number">0.97775787</span>, -<span class="number">1.06314909</span>,  <span class="number">1.12907749</span>,  <span class="number">1.08253432</span>]])</span><br></pre></td></tr></table></figure>
+<p>在上面的例子中，当被索引的数组的索引值为布尔值，将只索引值为 True 的数组行</p>
+<ul>
+<li>布尔数组的长度必须与被索引的数组行数相同</li>
+<li>如果两者不相等，布尔型选择就会出错</li>
+</ul>
+<h4 id="组合布尔条件">3.3.2 组合布尔条件</h4>
+<p>与 &amp; 、或 | 、非 ~（也可以使用 !=），在这里 Python 关键字 and 和 or 是无效的。</p>
+<blockquote>
+<p>通过布尔型数组选取数组中的数据，将总是创建数据的副本，即使返回的是一模一样的数组。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下面两个式子等价</span></span><br><span class="line">bool_arr2 != bool_arr</span><br><span class="line">~bool_arr</span><br><span class="line"></span><br><span class="line">bool_arr &amp; bool_arr2</span><br><span class="line">bool_arr | bool_arr2</span><br></pre></td></tr></table></figure>
+<p>通过布尔型数组设置值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">23</span>]: data[data&gt;<span class="number">0</span>]=<span class="number">1</span></span><br><span class="line">In [<span class="number">24</span>]: data</span><br><span class="line">Out[<span class="number">24</span>]: array([[ <span class="number">1.</span>        , -<span class="number">0.59954429</span>,  <span class="number">1.</span>        ,  <span class="number">1.</span>        ],</span><br><span class="line">                [ <span class="number">1.</span>        ,  <span class="number">1.</span>        , -<span class="number">2.1449317</span> , -<span class="number">0.64732145</span>],</span><br><span class="line">                [ <span class="number">1.</span>        , -<span class="number">1.06314909</span>,  <span class="number">1.</span>        ,  <span class="number">1.</span>        ],</span><br><span class="line">                [-<span class="number">1.72101891</span>, -<span class="number">1.27729686</span>, -<span class="number">0.5212782</span> , -<span class="number">1.8449167</span> ],</span><br><span class="line">                [-<span class="number">2.19790852</span>, -<span class="number">0.59721646</span>,  <span class="number">1.</span>        ,  <span class="number">1.</span>        ],</span><br><span class="line">                [-<span class="number">0.00994093</span>, -<span class="number">0.71700497</span>,  <span class="number">1.</span>        ,  <span class="number">1.</span>        ],</span><br><span class="line">                [ <span class="number">1.</span>        , -<span class="number">0.76997633</span>, -<span class="number">1.70276701</span>,  <span class="number">1.</span>        ]])</span><br></pre></td></tr></table></figure>
+<h3 id="花式索引">3.4 花式索引</h3>
+<p>花式索引（Fancy indexing）是一个 NumPy 术语，它指的是利用整数数组进行索引。</p>
+<p>假设有一个 8x4 的数组：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">25</span>]: arr = np.empty((<span class="number">8</span>, <span class="number">4</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="number">26</span>]: <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">8</span>):</span><br><span class="line">             arr[i] = i</span><br><span class="line"></span><br><span class="line">In [<span class="number">27</span>]: arr</span><br><span class="line">Out[<span class="number">27</span>]: array([[<span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>],</span><br><span class="line">                [<span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>],</span><br><span class="line">                [<span class="number">2.</span>, <span class="number">2.</span>, <span class="number">2.</span>, <span class="number">2.</span>],</span><br><span class="line">                [<span class="number">3.</span>, <span class="number">3.</span>, <span class="number">3.</span>, <span class="number">3.</span>],</span><br><span class="line">                [<span class="number">4.</span>, <span class="number">4.</span>, <span class="number">4.</span>, <span class="number">4.</span>],</span><br><span class="line">                [<span class="number">5.</span>, <span class="number">5.</span>, <span class="number">5.</span>, <span class="number">5.</span>],</span><br><span class="line">                [<span class="number">6.</span>, <span class="number">6.</span>, <span class="number">6.</span>, <span class="number">6.</span>],</span><br><span class="line">                [<span class="number">7.</span>, <span class="number">7.</span>, <span class="number">7.</span>, <span class="number">7.</span>]])</span><br></pre></td></tr></table></figure>
+<p>为了以特定顺序选取子集，只需传入一个用于指定顺序的整数列表或 ndarray 即可：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">28</span>]: arr[[<span class="number">3</span>,<span class="number">1</span>,<span class="number">7</span>]]</span><br><span class="line">Out[<span class="number">28</span>]: array([[<span class="number">3.</span>, <span class="number">3.</span>, <span class="number">3.</span>, <span class="number">3.</span>],</span><br><span class="line">                [<span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>],</span><br><span class="line">                [<span class="number">7.</span>, <span class="number">7.</span>, <span class="number">7.</span>, <span class="number">7.</span>]])</span><br></pre></td></tr></table></figure>
+<p>如果一次传入多个索引数组又会发生什么呢？</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">29</span>]: arr1 = np.arange(<span class="number">32</span>).reshape((<span class="number">8</span>, <span class="number">4</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="number">30</span>]: arr1</span><br><span class="line">Out[<span class="number">30</span>]: array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span><br><span class="line">                [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span><br><span class="line">                [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>],</span><br><span class="line">                [<span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">                [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>],</span><br><span class="line">                [<span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>],</span><br><span class="line">                [<span class="number">24</span>, <span class="number">25</span>, <span class="number">26</span>, <span class="number">27</span>],</span><br><span class="line">                [<span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>, <span class="number">31</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">31</span>]: arr1[[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]]</span><br><span class="line">Out[<span class="number">31</span>]: array([ <span class="number">5</span>, <span class="number">10</span>, <span class="number">15</span>])</span><br></pre></td></tr></table></figure>
+<p>会发现，最终选出的元素是（1, 1）、（2, 2）、（3, 3）.</p>
+<blockquote>
+<p>无论数组是多少维的，花式索引总是返回一维的。（整数数组的个数需要和数组的维数相等，不然返回的不是一维）</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">32</span>]: arr3d[[<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>],[<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>]]</span><br><span class="line">Out[<span class="number">32</span>]: array([[<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>],</span><br><span class="line">                [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>],</span><br><span class="line">                [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>前面的三维数组如果只有两个整数数组索引，返回的将是一个二维数组</li>
+<li>也就是说，要想返回一维数组，整数数组的个数必须和维数相等</li>
+</ul>
+<blockquote>
+<p>花式索引总是将数据复制到新数组中</p>
+</blockquote>
+<h2 id="四数组转置和轴对换">四、数组转置和轴对换</h2>
+<p>转置是重塑的一种特殊形式，它返回的是源数据的视图（不会进行任何复制操作）。</p>
+<p>实现数组的转置不仅有 transpose 方法，还有一个特殊的 T 属性：</p>
+<h3 id="t-属性轴对换">4.1 T 属性——轴对换</h3>
+<p>T 属性适用于简单的二维数组，其实就是轴对换而已</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">1</span>]: arr = np.arange(<span class="number">15</span>).reshape((<span class="number">3</span>, <span class="number">5</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="number">2</span>]: arr</span><br><span class="line">Out[<span class="number">2</span>]: array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>],</span><br><span class="line">               [ <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>,  <span class="number">9</span>],</span><br><span class="line">               [<span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">3</span>]: arr.T</span><br><span class="line">Out[<span class="number">3</span>]: array([[ <span class="number">0</span>,  <span class="number">5</span>, <span class="number">10</span>],</span><br><span class="line">               [ <span class="number">1</span>,  <span class="number">6</span>, <span class="number">11</span>],</span><br><span class="line">               [ <span class="number">2</span>,  <span class="number">7</span>, <span class="number">12</span>],</span><br><span class="line">               [ <span class="number">3</span>,  <span class="number">8</span>, <span class="number">13</span>],</span><br><span class="line">               [ <span class="number">4</span>,  <span class="number">9</span>, <span class="number">14</span>]])</span><br></pre></td></tr></table></figure>
+<p>可以看到，转置或者 T 属性将一个 3x5 的数组转置成了一个 5x3 的数组.</p>
+<p>进行矩阵计算时，经常会用到转置。比如使用 np.dot 计算矩阵的内积（点乘）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">4</span>]: np.dot(arr, arr.T)</span><br><span class="line">Out[<span class="number">4</span>]: array([[ <span class="number">30</span>,  <span class="number">80</span>, <span class="number">130</span>],</span><br><span class="line">               [ <span class="number">80</span>, <span class="number">255</span>, <span class="number">430</span>],</span><br><span class="line">               [<span class="number">130</span>, <span class="number">430</span>, <span class="number">730</span>]])</span><br></pre></td></tr></table></figure>
+<h3 id="transpose-方法">4.2 transpose 方法</h3>
+<p>对于高维数组，transpose 必须要得到一个由轴编号组成的元组才能对这些轴进行转置</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">5</span>]: arr2 = np.arange(<span class="number">24</span>).reshape((<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="number">6</span>]: arr2</span><br><span class="line">Out[<span class="number">6</span>]: array([[[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span><br><span class="line">                [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span><br><span class="line">                [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]],</span><br><span class="line"></span><br><span class="line">               [[<span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">                [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>],</span><br><span class="line">                [<span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>]]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">7</span>]: arr2.transpose((<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>))</span><br><span class="line">Out[<span class="number">7</span>]: array([[[ <span class="number">0</span>,  <span class="number">4</span>,  <span class="number">8</span>],</span><br><span class="line">                [<span class="number">12</span>, <span class="number">16</span>, <span class="number">20</span>]],</span><br><span class="line"></span><br><span class="line">               [[ <span class="number">1</span>,  <span class="number">5</span>,  <span class="number">9</span>],</span><br><span class="line">                [<span class="number">13</span>, <span class="number">17</span>, <span class="number">21</span>]],</span><br><span class="line"></span><br><span class="line">               [[ <span class="number">2</span>,  <span class="number">6</span>, <span class="number">10</span>],</span><br><span class="line">                [<span class="number">14</span>, <span class="number">18</span>, <span class="number">22</span>]],</span><br><span class="line"></span><br><span class="line">               [[ <span class="number">3</span>,  <span class="number">7</span>, <span class="number">11</span>],</span><br><span class="line">                [<span class="number">15</span>, <span class="number">19</span>, <span class="number">23</span>]]])</span><br></pre></td></tr></table></figure>
+<p>说明：</p>
+<ul>
+<li>transpose 的参数是轴的序号，比如这里的三维数组有三个轴0、1、2，表示第一、第二、第三轴，</li>
+<li>示例中的转置实现的是将第三轴换到第一轴，第一轴换到第二轴，第二轴换到第三轴</li>
+<li>所以原来的 2x3x4 数组变换成了 4x2x3 数组</li>
+</ul>
+<h3 id="swapaxes-方法">4.3 swapaxes 方法</h3>
+<p>swapaxes 方法的参数是一对轴编号，也只能是一对。它的意思是交换参数中的两个轴。swapaxes也是返回源数据的视图（不会进行任何复制操作）。</p>
+<p>还是以上面的 2x3x4 数组为例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">8</span>]: arr2.swapaxes(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">Out[<span class="number">8</span>]: array([[[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span><br><span class="line">                [<span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>]],</span><br><span class="line"></span><br><span class="line">               [[ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span><br><span class="line">                [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>]],</span><br><span class="line"></span><br><span class="line">               [[ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>],</span><br><span class="line">                [<span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>]]])</span><br></pre></td></tr></table></figure>
+<p>交换第一轴和第二轴，转置成 3x2x4 数组。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Numpy/" rel="tag"># Numpy</a>
+              <a href="/tags/ndarray/" rel="tag"># ndarray</a>
+              <a href="/tags/%E8%BD%AC%E7%BD%AE/" rel="tag"># 转置</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/NumPy%E7%AE%80%E4%BB%8B.html" rel="prev" title="NumPy简介">
+                  <i class="fa fa-chevron-left"></i> NumPy简介
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E5%86%B2%E5%8E%8B%E5%8A%A0%E5%B7%A5%E6%A6%82%E8%BF%B0.html" rel="next" title="冲压加工概述">
+                  冲压加工概述 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">vungjoe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+</body>
+</html>
