@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.vungjoe.xyz","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="一、函数的定义与使用 函数是一段代码的表示，  函数是一段具有特定功能的、可重用的语句组 函数是一种功能的抽象，表达特定的功能 两个作用：降低编程难度 和 代码复用  函数的定义： 123def &lt;函数名&gt;(&lt;参数（0 个或者多个）&gt;):    &lt;函数体&gt;    return &lt;返回值&gt;  函数定义时，所指定的参数是一种占位符 函数定义后，如果不经过">
+<meta property="og:type" content="article">
+<meta property="og:title" content="函数和代码复用">
+<meta property="og:url" content="https://blog.vungjoe.xyz/%E5%87%BD%E6%95%B0%E5%92%8C%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%94%A8.html">
+<meta property="og:site_name" content="VUNGJOE&#39;S BLOG">
+<meta property="og:description" content="一、函数的定义与使用 函数是一段代码的表示，  函数是一段具有特定功能的、可重用的语句组 函数是一种功能的抽象，表达特定的功能 两个作用：降低编程难度 和 代码复用  函数的定义： 123def &lt;函数名&gt;(&lt;参数（0 个或者多个）&gt;):    &lt;函数体&gt;    return &lt;返回值&gt;  函数定义时，所指定的参数是一种占位符 函数定义后，如果不经过">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-05-13T12:46:05.000Z">
+<meta property="article:modified_time" content="2019-05-13T12:46:05.000Z">
+<meta property="article:author" content="vungjoe">
+<meta property="article:tag" content="函数">
+<meta property="article:tag" content="代码复用">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.vungjoe.xyz/%E5%87%BD%E6%95%B0%E5%92%8C%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%94%A8.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":"","permalink":"https://blog.vungjoe.xyz/%E5%87%BD%E6%95%B0%E5%92%8C%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%94%A8.html","path":"函数和代码复用.html","title":"函数和代码复用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>函数和代码复用 | VUNGJOE'S BLOG</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">VUNGJOE'S BLOG</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E4%BD%BF%E7%94%A8"><span class="nav-text">一、函数的定义与使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E8%B0%83%E7%94%A8"><span class="nav-text">1.1 函数的调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-text">1.2 参数传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-text">1.3 函数的返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E5%92%8C%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="nav-text">1.4 局部变量和全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lambda-%E5%87%BD%E6%95%B0%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%E5%8F%AA%E5%81%9A%E4%BA%86%E8%A7%A3"><span class="nav-text">1.5 lambda 函数——匿名函数，只做了解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%94%A8%E5%92%8C%E5%87%BD%E6%95%B0%E9%80%92%E5%BD%92"><span class="nav-text">二、代码复用和函数递归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%94%A8"><span class="nav-text">2.1 代码复用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96%E8%AE%BE%E8%AE%A1"><span class="nav-text">2.2 模块化设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E9%80%92%E5%BD%92"><span class="nav-text">2.3 函数递归</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">vungjoe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/vungjoe" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;vungjoe" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:vungjoe.xyz@gmail.com" title="E-Mail → mailto:vungjoe.xyz@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.vungjoe.xyz/%E5%87%BD%E6%95%B0%E5%92%8C%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%94%A8.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="vungjoe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="VUNGJOE'S BLOG">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          函数和代码复用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-05-13 20:46:05" itemprop="dateCreated datePublished" datetime="2019-05-13T20:46:05+08:00">2019-05-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Python3/" itemprop="url" rel="index"><span itemprop="name">Python3</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="一函数的定义与使用">一、函数的定义与使用</h2>
+<p>函数是一段代码的表示，</p>
+<ul>
+<li>函数是一段具有特定功能的、可重用的语句组</li>
+<li>函数是一种功能的抽象，表达特定的功能</li>
+<li>两个作用：降低编程难度 和 代码复用</li>
+</ul>
+<p>函数的定义：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> &lt;函数名&gt;(&lt;参数（<span class="number">0</span> 个或者多个）&gt;):</span><br><span class="line">    &lt;函数体&gt;</span><br><span class="line">    <span class="keyword">return</span> &lt;返回值&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>函数定义时，所指定的参数是一种占位符</li>
+<li>函数定义后，如果不经过调用，不会被执行</li>
+<li>函数定义时，参数是输入、函数体是处理、结果是输出（IPO）</li>
+</ul>
+<span id="more"></span>
+<h3 id="函数的调用">1.1 函数的调用</h3>
+<p>调用是运行函数代码的方式：</p>
+<ul>
+<li>调用时要给出实际参数</li>
+<li>实际参数替换定义中的参数</li>
+<li>函数调用后得到返回值</li>
+</ul>
+<h3 id="参数传递">1.2 参数传递</h3>
+<p>可选参数：函数定义时可以为某些参数指定默认值（定义时 def f(n, m=2)，种就构成了可选参数。可选参数必须放在必选参数的后面，也就是说：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> &lt;函数名&gt;(&lt;必选参数&gt;, &lt;可选参数&gt;):</span><br><span class="line">    &lt;函数体&gt;</span><br><span class="line">    <span class="keyword">return</span> &lt;返回值&gt;</span><br></pre></td></tr></table></figure>
+<p>可变参数：函数定义时可以设计可变数量参数，即不确定参数的数量：在可变数量参数前面加星号 <code>*</code> 。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> &lt;函数名&gt;(&lt;必选参数&gt;, *&lt;可变数量参数&gt;):</span><br><span class="line">    &lt;函数体&gt;</span><br><span class="line">    <span class="keyword">return</span> &lt;返回值&gt;</span><br></pre></td></tr></table></figure>
+<p>参数传递的两种方式：</p>
+<ul>
+<li>按位置传递：fact(1, 2 )</li>
+<li>按名称传递：fact(m=1, n=2)</li>
+</ul>
+<h3 id="函数的返回值">1.3 函数的返回值</h3>
+<p>函数可以返回 0 个或多个结果：</p>
+<ul>
+<li>函数使用 return 保留字来传递返回值</li>
+<li>函数可以有返回值，也可以没有；可以有 return ，也可以没有</li>
+<li>return 可以传递 0 个返回值，也可以传递任意多个返回值</li>
+</ul>
+<h3 id="局部变量和全局变量">1.4 局部变量和全局变量</h3>
+<p>局部变量和全局变量是不同变量</p>
+<ul>
+<li>局部变量是函数内部的占位符，与全局变量可能重名但并不相同
+<ul>
+<li>如果变量是基本数据类型，局部变量和全局变量不相同</li>
+<li>如果变量是组合数据类型（如列表、），则当函数体内部未声明变量、且与全局变量同名时，其就是全局变量（看下面的示例）——据说是跟指针有关系，不同东，有想了解的自行了解</li>
+</ul></li>
+<li>运算结束后，局部变量会被释放</li>
+<li>函数内部可以使用 global 保留字来创建全局变量</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ls = [<span class="string">'a0'</span>, <span class="string">'b2'</span>]</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>():</span><br><span class="line">    ls.append(a)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">func(<span class="string">"dfq"</span>)</span><br><span class="line"><span class="built_in">print</span>(ls)</span><br></pre></td></tr></table></figure>
+<p>其结果是 <code>['a0', 'b2', 'dfq']</code>。这里的 ls 是全局变量（未在函数体内部声明）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ls = [<span class="string">'a0'</span>, <span class="string">'b2'</span>]</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>():</span><br><span class="line">    ls = []</span><br><span class="line">    ls.append(a)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">func(<span class="string">"dfq"</span>)</span><br><span class="line"><span class="built_in">print</span>(ls)</span><br></pre></td></tr></table></figure>
+<p>其结果是 <code>['a0', 'b2']</code>。这里的 ls 是局部变量。</p>
+<h3 id="lambda-函数匿名函数只做了解">1.5 lambda 函数——匿名函数，只做了解</h3>
+<p>lambda 函数返回函数名作为结果</p>
+<ul>
+<li>lambda 函数是一种匿名函数，即没有名字的函数</li>
+<li>lambda 函数用于定义简单的、能够在一行内表示的函数。主要用作一些特定的函数或方法的参数</li>
+<li>建议使用 def 定义函数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;函数名&gt; = <span class="keyword">lambda</span> &lt;参数&gt;: &lt;表达式&gt;</span><br></pre></td></tr></table></figure>
+<p>示例代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f = <span class="keyword">lambda</span> x, y: x + y</span><br></pre></td></tr></table></figure>
+<p>上述代码定义了一个求和函数 f ，使用时只需 f(1, 2) 即可。</p>
+<h2 id="二代码复用和函数递归">二、代码复用和函数递归</h2>
+<h3 id="代码复用">2.1 代码复用</h3>
+<p>把代码当成资源进行抽象</p>
+<ul>
+<li>代码资源化：程序代码是一种用来表达计算的“资源”</li>
+<li>代码抽象化：使用函数等方法对代码富裕更高级别的定义</li>
+<li>代码复用：同一份代码在需要时可以被重复使用</li>
+</ul>
+<p>代码复用的两种形式：</p>
+<ul>
+<li>函数：将代码命名，在代码层面建立了初步抽象</li>
+<li>对象：属性和方法，在函数之上再次组织进行抽象
+<ul>
+<li>属性： <code>&lt;a&gt;.&lt;b&gt;</code></li>
+<li>方法：<code>&lt;a&gt;.&lt;b&gt;()</code></li>
+</ul></li>
+</ul>
+<h3 id="模块化设计">2.2 模块化设计</h3>
+<p>模块化设计的基本思想是自顶向下、逐步分解、分而治之，即将一个较大的程序按照功能分隔成一些小模块，各模块相对独立、功能单一、结构清晰、接口简单。</p>
+<ul>
+<li>通过函数或对象封装将程序划分为模块及模块间的表达</li>
+<li>具体包括：主程序、子程序和子程序间关系</li>
+<li>分而治之：一种分而治之、分层抽象、体系化的设计思想</li>
+</ul>
+<blockquote>
+<p>紧耦合 松耦合</p>
+<ul>
+<li>紧耦合：两个部分之间交流很多，无法独立存在</li>
+<li>松耦合：两个部分之间交流较少，可以独立存在</li>
+<li>模块内部紧耦合、模块之间松耦合</li>
+</ul>
+</blockquote>
+<h3 id="函数递归">2.3 函数递归</h3>
+<p>函数递归（或者叫递归函数）：在函数定义中调用函数自身的方式，就是递归。</p>
+<p>两个关键特征：</p>
+<ul>
+<li>链条：计算过程存在递归链条</li>
+<li>基例：存在一个或多个不需要再次递归的基例</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%87%BD%E6%95%B0/" rel="tag"># 函数</a>
+              <a href="/tags/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%94%A8/" rel="tag"># 代码复用</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Python%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84.html" rel="prev" title="Python程序的控制结构">
+                  <i class="fa fa-chevron-left"></i> Python程序的控制结构
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/UG%E5%BB%BA%E6%A8%A1%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B0%94%E8%BF%90%E7%AE%97%E5%AF%B9%E6%B5%8B%E9%87%8F%E7%BB%93%E6%9E%9C%E7%9A%84%E5%BD%B1%E5%93%8D.html" rel="next" title="UG建模中的布尔运算对测量结果的影响">
+                  UG建模中的布尔运算对测量结果的影响 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">vungjoe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+</body>
+</html>
